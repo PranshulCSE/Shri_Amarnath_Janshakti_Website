@@ -4,54 +4,223 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Donation | SAJSSM</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Donations | Shri Amarnath JanShakti Sewa Mandal</title>
+    <link rel="stylesheet" href="Style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
-    <header>
-        <h1>Support Our Sewa</h1>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="logo-section">
+                <img src="./Images/logo.png.png" alt="SAJSSM Logo" class="logo" />
+                <div class="header-text">
+                    <h1 class="site-title">SHRI AMARNATH JANSHAKTI SEWA MANDAL</h1>
+                    <p class="registration">REG.01104 | H.No. 86/5 Gandhi Nagar, Karnal Hry. (132001)</p>
+                    <p class="contact-info">📞 9466132732 | 9466132733 | 7015345275 | 9996181668</p>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="navbar" id="navbar">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="history.html" class="nav-link">History</a></li>
+                <li><a href="Yatra.html" class="nav-link">Yatra</a></li>
+                <li><a href="Donation.html" class="nav-link active">Donations</a></li>
+                <li><a href="News.html" class="nav-link">News & Events</a></li>
+                <li><a href="Gallery.html" class="nav-link">Gallery</a></li>
+                <li><a href="Contact_Us.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <nav class="nav">
-        <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="donation.html">Donation</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="history.html">History</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            
-        </ul>
-    </nav>
-
-    <main>
-        <div class="main">
-            <h2>Your Contribution Matters</h2>
-            <p>Your donations help us provide free Langar and essential services to the pilgrims of Shri Amarnath Ji
-                Yatra.
-                Every contribution, big or small, makes a significant impact.</p>
-            <hr />
-            <section class="donation-section">
-                <h2>Bank Details</h2>
-                <p><strong>Account Name:</strong> SHRI AMARNATH JANSHAKTI SEWA MANDAL</p>
-                <p><strong>Bank:</strong> HDFC BANK</p>
-                <p><strong>Account Number:</strong> 50200109501402</p>
-                <p><strong>IFSC Code:</strong> HDFC0003989</p>
-                <hr />
-                <h2 class="sc">Scan to Donate</h2>
-                <img src="/Front_End/SAJSSM/Images/qr.png.jpg" alt="QR Code for Donation" class="sc" id="qr" />
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2 class="hero-title">दान करें और सेवा करें</h2>
+            <p class="hero-subtitle">यात्रियों की सहायता के लिए आपका योगदान</p>
+            <p class="hero-description">प्रत्येक दान हजारों यात्रियों की जीवन बदल सकता है</p>
+            <div class="hero-buttons">
+                <a href="#donation-methods" class="btn btn-primary">अभी दान करें</a>
+            </div>
         </div>
-        <hr />
-        <h2>You can also Donate Using UPI</h2>
-        <h3>UPI ID: 9466132732@ibl</h3>
-        <hr />
-        <h2>Donate Using Google Pay</h2>
-        <h3><i class="fab fa-google-pay"> 9466132732</i></h3>
+        <div class="hero-image">
+            <img src="./Images/Yatra2.jpg" alt="Donation" class="responsive-image" />
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="features">
+        <h2 class="section-title">आपके दान का प्रभाव</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">₹100</div>
+                <h3>एक भोजन</h3>
+                <p>आपका ₹100 का दान एक यात्री को स्वादिष्ट भोजन प्रदान कर सकता है।</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">₹500</div>
+                <h3>पाँच भोजन</h3>
+                <p>₹500 से पाँच यात्रियों को पौष्टिक भोजन परोसा जा सकता है।</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">₹1000</div>
+                <h3>चिकित्सा सहायता</h3>
+                <p>₹1000 से यात्रियों को आवश्यक चिकित्सा सहायता दी जा सकती है।</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">₹5000+</div>
+                <h3>संपूर्ण सहायता</h3>
+                <p>₹5000 से एक यात्री को पूर्ण सहायता सेवा प्रदान की जा सकती है।</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Methods -->
+    <section class="cta-section" id="donation-methods">
+        <h2>दान करने के तरीके</h2>
+        <p>आप निम्नलिखित तरीकों से हमें दान दे सकते हैं</p>
+        <div class="cta-buttons">
+            <div style="width: 100%;">
+                <h3>🏦 बैंक ट्रांसफर</h3>
+                <p><strong>खाता नाम:</strong> SHRI AMARNATH JANSHAKTI SEWA MANDAL</p>
+                <p><strong>बैंक:</strong> HDFC BANK</p>
+                <p><strong>खाता संख्या:</strong> 50200109501402</p>
+                <p><strong>IFSC कोड:</strong> HDFC0003989</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Payment Methods -->
+    <section class="features">
+        <h2 class="section-title">डिजिटल भुगतान विकल्प</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>UPI ट्रांसफर</h3>
+                <p><strong>UPI ID:</strong> 9466132732@ibl</p>
+                <p>किसी भी UPI ऐप से तुरंत भुगतान करें</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Google Pay</h3>
+                <p><strong>नंबर:</strong> 9466132732</p>
+                <p>Google Pay ऐप के जरिए दान करें</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏧</div>
+                <h3>चेक द्वारा</h3>
+                <p>संस्था के नाम से चेक भेजें</p>
+                <p>पता: H.No. 86/5, गांधी नगर, करनाल</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎁</div>
+                <h3>सीधे दान</h3>
+                <p>हमारे कार्यालय में व्यक्तिगत रूप से दान दें</p>
+                <p>📞 संपर्क: 9466132732</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- QR Code Section -->
+    <section class="cta-section">
+        <h2>QR कोड स्कैन करके दान करें</h2>
+        <p>नीचे दिए गए QR कोड को स्कैन करके तुरंत दान कर सकते हैं</p>
+        <img src="./Images/qr.png.jpg" alt="Donation QR Code"
+            style="max-width: 200px; margin: 20px auto; display: block; border-radius: 10px;" />
+    </section>
+
+    <!-- Donation Form -->
+    <section class="features">
+        <h2 class="section-title">ऑनलाइन दान फॉर्म</h2>
+        <div style="background: white; padding: 30px; border-radius: 10px; max-width: 600px; margin: 0 auto;">
+            <form id="donationForm">
+                <div class="form-row">
+                    <input type="text" placeholder="आपका नाम" required />
+                </div>
+                <div class="form-row">
+                    <input type="email" placeholder="आपका ईमेल" required />
+                </div>
+                <div class="form-row">
+                    <input type="number" placeholder="दान की राशि (₹)" required />
+                </div>
+                <div class="form-row">
+                    <textarea placeholder="आपका संदेश (वैकल्पिक)" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">दान पूरा करें</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Tax Benefits -->
+    <section class="cta-section">
+        <h2>कर लाभ</h2>
+        <p>भारतीय कानून के अनुसार, धर्मार्थ संगठनों को दिए गए दान पर आयकर छूट मिल सकती है। अधिक जानकारी के लिए हमसे
+            संपर्क करें।</p>
+    </section>
+
+    <!-- Social Media Links -->
+    <section class="social-section">
+        <h3>हमें सोशल मीडिया पर फॉलो करें</h3>
+        <div class="social-links">
+            <a href="https://www.facebook.com/people/Shri-amarnath-jan-shakti-sewa-mandal-ram-nagar-karnal/100067520252003/"
+                class="social-icon" title="Facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/shri_amarnath_janshakti/" class="social-icon" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/" class="social-icon" title="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="mailto:shriamarnathjanshakti@gmail.com" class="social-icon" title="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About SAJSSM</h4>
+                <p>श्री अमरनाथ जनशक्ति सेवा मंडल यात्रियों की सेवा में समर्पित एक संस्था है।</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="Yatra.html">Yatra</a></li>
+                    <li><a href="Donation.html">Donations</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>📞 9466132732</p>
+                <p>📧 info@sajssm.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> Shri Amarnath JanShakti Sewa Mandal — All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
 
 
-        </section>
-    </main>
+</section>
+</main>
 </body>
 
 </html>

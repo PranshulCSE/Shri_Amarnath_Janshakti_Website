@@ -1,268 +1,211 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>History — Shri Amarnath JanShakti Sewa Mandal</title>
-  <style>
-    :root {
-      --bg: #f7f9fb;
-      --card: #ffffff;
-      --accent: #0b5ed7;
-      --muted: #6b7280;
-      --maxw: 900px;
-      --radius: 10px;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, var(--bg), #ffffff);
-      color: #111827;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      line-height: 1.5;
-    }
-
-    .container {
-      max-width: var(--maxw);
-      margin: 40px auto;
-      padding: 20px;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-
-    .brand {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--accent), #2a9df4);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      box-shadow: 0 6px 18px rgba(11, 94, 215, 0.12);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 1.25rem;
-    }
-
-    p.lead {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    main {
-      display: grid;
-      gap: 18px;
-    }
-
-    .hero {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
-    }
-
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .event {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 12px;
-      align-items: start;
-      background: var(--card);
-      padding: 14px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
-    }
-
-    .event .year {
-      font-weight: 700;
-      color: var(--accent);
-      font-size: 0.98rem;
-    }
-
-    .event h3 {
-      margin: 0 0 6px;
-      font-size: 1rem;
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    @media (min-width:800px) {
-      .grid {
-        grid-template-columns: 1fr 320px;
-      }
-    }
-
-    .card {
-      background: var(--card);
-      padding: 14px;
-      border-radius: 8px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
-    }
-
-    footer {
-      margin-top: 18px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    ul {
-      margin: 6px 0 0;
-      padding-left: 20px;
-      color: var(--muted);
-    }
-  </style>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>History | Shri Amarnath JanShakti Sewa Mandal</title>
+  <link rel="stylesheet" href="Style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
-  <nav class="nav">
-    <ul class="menu">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="donation.html">Donation</a></li>
-
-      <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="history.html">History</a></li>
-      <li><a href="Contact_Us.html">Contact</a></li>
-    </ul>
-  </nav>
-  <div class="container">
-    <header>
-      <div class="brand" aria-hidden="false">
-        <div>
-          <h1>Shri Amarnath JanShakti Sewa Mandal</h1>
-          <p class="lead">History and milestones of our society</p>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-top">
+      <div class="logo-section">
+        <img src="./Images/logo.png.png" alt="SAJSSM Logo" class="logo" />
+        <div class="header-text">
+          <h1 class="site-title">SHRI AMARNATH JANSHAKTI SEWA MANDAL</h1>
+          <p class="registration">REG.01104 | H.No. 186/5 Gandhi Nagar, Karnal Hry. (132001)</p>
+          <p class="contact-info">📞 9466132732 | 9466132733 | 7015345275 | 9996181668</p>
         </div>
       </div>
-      <nav aria-label="Primary">
-        <a href="#history" style="color:var(--accent); font-weight:600;">History</a>
-      </nav>
-    </header>
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
 
-    <main>
-      <section class="hero card" id="history" aria-labelledby="history-title">
-        <h2 id="history-title">Our Story</h2>
-        <p class="muted">
-          Shri Amarnath JanShakti Sewa Mandal (SAJSSM) is a society dedicated to social service,Langar Sewa, Medical Aid
-          Facility and residencial services to Shri Amarnath Ji Yatris.The following timeline highlights key moments of
-          our Sewa and
-          growth of the organization.
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="history.html" class="nav-link active">History</a></li>
+        <li><a href="Yatra.html" class="nav-link">Yatra</a></li>
+        <li><a href="Donation.html" class="nav-link">Donations</a></li>
+        <li><a href="News.html" class="nav-link">News & Events</a></li>
+        <li><a href="Gallery.html" class="nav-link">Gallery</a></li>
+        <li><a href="Contact_Us.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2 class="hero-title">Our History</h2>
+      <p class="hero-subtitle">Journey of SAJSSM</p>
+      <p class="hero-description">A Story of Service and Devotion</p>
+    </div>
+    <div class="hero-image">
+      <img src="./Images/Yatra2.jpg" alt="History" class="responsive-image" />
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section class="features">
+    <h2 class="section-title">हमारी यात्रा</h2>
+    <div style="background: white; padding: 40px; border-radius: 10px; margin: 20px;">
+      <div style="border-left: 4px solid #ff6b35; padding-left: 20px; margin: 20px 0;">
+        <h3 style="color: #ff6b35; margin-top: 0;">🏛️ संगठन की स्थापना</h3>
+        <p>श्री अमरनाथ यात्रियों की सेवा के लिए एक समर्पित संस्था की स्थापना की गई। हमारे पूर्व प्रधान <strong> स्व.
+            श्री मुकेश दुआ जी </strong> ने अपने मित्रों के साथ लंगर सेवा,
+          चिकित्सा सहायता और अन्य सामाजिक कार्यों के माध्यम से समाज की सेवा का संकल्प लिया।</p>
+        <p><strong>पंजीकरण संख्या:</strong> REG.01104</p>
+      </div>
+      <div style="border-left: 4px solid #f7931e; padding-left: 20px; margin: 20px 0;">
+        <h3 style="color: #f7931e; margin-top: 0;\">🍲 लंगर सेवा की शुरुआत (2011)</h3>
+        <p>पहली बार बालटाल में हमने 4-5 कैम्पिंग तंबुओं की स्थापना करके श्री अमरनाथ यात्रियों को विभिन्न सेवाएं प्रदान
+          करनी शुरू कीं।</p>
+        <p>यह सेवा प्रतिवर्ष बढ़ती गई और आज लाखों यात्रियों को लाभान्वित कर रही है।</p>
+      </div>
+      <div style="border-left: 4px solid #25f916; padding-left: 20px; margin: 20px 0;">
+        <h3 style="color: #25f916; margin-top: 0;\">श्री केदारनाथ धाम मे सेवा(2015-19) </h3>
+        <p>श्री अमरनाथ जनशक्ति सेवा मण्डल द्वारा प्रधान श्री मुकेश दुआ जी की अगुवाई मे सन्न 2015 से सन्न 2019 तक बाबा
+          केदारनाथ धाम के श्री चरणों मे केदारनाथ मंदिर के साथ स्थित
+          प्रवचन हॉल मे भी प्रतिवर्ष 1 महीने हेतु भंडारे का आयोजन किया।
         </p>
-      </section>
+        <p>साल 2020-21 के कोरोना काल के पश्चात उत्तराखंड सरकार द्वारा अनुमति न मिलने पर केदारनाथ धाम में भंडारे का आयोजन
+          मुमकिन नहीं हो पाया। </p>
+      </div>
+      <div style="border-left: 4px solid #004e89; padding-left: 20px; margin: 20px 0;">
+        <h3 style="color: #004e89; margin-top: 0;\">🎯 नई शुरुआत (2023)</h3>
+        <p>बाबा बर्फानी जी के आशीर्वाद से मई 2023 में हमें दोमेल, बालटाल में लंगर स्थापित करने की अनुमति मिली।</p>
+        <p>गांदरबल जिले के उप-आयुक्त द्वारा जारी इस अनुमति के तहत हमने 2023 और 2024 में यात्रियों को निःस्वार्थ सेवाएं
+          प्रदान कीं।</p>
+      </div>
 
-      <div class="grid">
-        <section class="card">
-          <h3 style="margin-top:0">Timeline & Milestones</h3>
-          <div class="timeline" role="list">
-            <article class="event" role="listitem">
-              <div class="year">Founding</div>
-              <div>
-                <h3>Establishment and Vision</h3>
-                <p class="muted">Our Ex-President Late Mr. Mukesh Dua Ji along with Some Family Friends founded Shri
-                  Amarnath JanShakti Sewa Mandal with the mission to provide
-                  Langar Sewa and other Social works like Creamation of Dead Bodies,Blood Donations, selfless services
-                  etc.</p>
-              </div>
-            </article>
+      <div style="border-left: 4px solid #ff6b35; padding-left: 20px; margin: 20px 0;">
+        <h3 style="color: #ff6b35; margin-top: 0;">🏛️ संस्था के अनमोल रत्न का निधन(2024) </h3>
+        <p>श्री अमरनाथ यात्रियों की एवं समाज सेवा में सदैव समर्पित प्रधान <strong>श्री
+            मुकेश दुआ जी </strong> ने श्री अमरनाथ यात्रा 2024 के प्रथम दिन बाबा बर्फानी जी के श्री चरणों मे नमन करते हुए
+          अपने अंतिम श्वास लिए। उस
+          समय लंगर सेवा बालटाल में आरंभ हो चुकी थी, परंतु इस शोक समाचार से समग्र सेवादार बहुत दुखी हुए, लेकिन मुकेश दुआ
+          जी के वचन
+          (<strong> "सेवा कभी नहीं रुकनी चाहिए!!"</strong>) का पालन करते हुए यात्रा के समापन तक शिव भक्तों की सेवा मे
+          लगे रहे।
+          इस दुर्घटना के पश्चात मण्डल की बैठक में माननीय <strong> श्री जगमोहन शर्मा </strong> जी को प्रधान नियुक्त किया
+          गया।
+        </p>
+      </div>
+      <div style="border-left: 4px solid #06a77d; padding-left: 20px; margin: 20px 0;">
+        <h3 style="color: #06a77d; margin-top: 0;\">⭐ प्रमुख उपलब्धि (2025)</h3>
+        <p>2025 में श्री अमरनाथ जी श्राइन बोर्ड ने हमें बराड़ी-मार्ग (श्री अमरनाथ जी यात्रा (बालटाल रूट)के सर्वोच्च
+          बिंदु) पर लंगर
+          स्थापित करने का अवसर दिया।</p>
+        <p>इसके लिए हमें माननीय <strong>लेफ्टिनेंट गवर्नर ऑफ जम्मू-कश्मीर</strong> और श्री अमरनाथ जी श्राइन बोर्ड के
+          अध्यक्ष <strong>मनोज सिन्हा
+            जी</strong> द्वारा प्रशंसा पत्र मिला।</p>
+      </div>
+      <div style="border-left: 4px solid #f7931e; padding-left: 20px; margin: 20px 0;">
+        <h3 style="color: #f97316; margin-top: 0;\">🚀 आज और भविष्य</h3>
+        <p>आज श्री अमरनाथ जनशक्ति सेवा मण्डल,करनाल अगली यात्रा 2026 के लिए अपनी सेवाओं को बेहतर बनाने के लिए काम कर रहा
+          है।</p>
+        <p>हम मानवता की सेवा के लिए अगली यात्रा में भी तत्पर हैं और अपनी सेवाओं को जारी रखने के लिए प्रतिबद्ध हैं।</p>
+      </div>
+    </div>
+  </section>
 
-            <article class="event" role="listitem">
-              <div class="year">Begining in 2011</div>
-              <div>
-                <h3>Sewa At Baltal</h3>
-                <p class="muted"> Initially We Setup 4-5 Camping Tents at Baltal to provide various Services to Yatris.
-                </p>
-              </div>
-            </article>
+  <!-- Achievements Section -->
+  <section class="features">
+    <h2 class="section-title">हमारी उपलब्धियाँ</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎖️</div>
+        <h3>लाखों यात्रियों की सेवा</h3>
+        <p>अब तक लाखों श्री अमरनाथ यात्रियों को निःशुल्क भोजन और सेवाएं प्रदान की गई हैं।</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>स्वयंसेवकों की बड़ी टीम</h3>
+        <p>हजारों समर्पित स्वयंसेवक हर साल यात्रियों की सेवा के लिए आगे आते हैं।</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏗️</div>
+        <h3>अत्याधुनिक सुविधाएं</h3>
+        <p>लंगर घरों और सेवा केंद्रों को आधुनिक सुविधाओं से सुसज्जित किया गया है।</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌟</div>
+        <h3>सरकारी सम्मान</h3>
+        <p>हमारी सेवा के लिए राज्य सरकार और श्राइन बोर्ड की ओर से प्रशंसा पत्र प्राप्त हुए हैं।</p>
+      </div>
+    </div>
+  </section>
 
-            <article class="event" role="listitem">
-              <div class="year"></div>
-              <div>
-                <h3>New Begining in 2023</h3>
-                <p class="muted">With the Blessings of Baba Barfani Ji, in May 2023 we got our own permission to setup
-                  Langar at Domail,Baltal by <b>Deputy Commissioner of Dist. Ganderbal.</b>
-                  After that we provided Service to Yatris in the Year 2023,2024 Selflessly.</p>
-              </div>
-            </article>
+  <!-- Vision & Mission -->
+  <section class="cta-section">
+    <h2>भविष्य की दृष्टि</h2>
+    <p>हम भविष्य में और अधिक यात्रियों की सेवा करने के लिए प्रतिबद्ध हैं। हमारा लक्ष्य है:</p>
+    <ul style="text-align: left; max-width: 600px; margin: 20px auto;">
+      <li>✅ और अधिक लंगर घर खोलना</li>
+      <li>✅ चिकित्सा सुविधाओं का विस्तार करना</li>
+      <li>✅ शिक्षा कार्यक्रमों को बढ़ाना</li>
+      <li>✅ प्रत्येक यात्री तक पहुंचना</li>
+      <li>✅ सामाजिक कल्याण में योगदान देना</li>
+    </ul>
+  </section>
 
-            <article class="event" role="listitem">
-              <div class="year">Langar At Brari-Marg</div>
-              <div>
-                <h3>Another Key Achievment</h3>
-                <p class="muted">In the Year 2025, Shri Amarnath Ji Shrine Board Offers Shri Amarnath JanShakti Sewa
-                  Mandal to setup Langar at Brarimarg (Which is the Highest Point of Shri_Amarnath_Ji_Yatra).After that
-                  we recieve a Certificate of Appreciation from Honurable Lieutinant Governer of J&K & Chairman Of Shri
-                  Amarnath Ji Shrine Board Manoj Sinha Ji.</p>
-              </div>
-            </article>
+  <!-- Social Media Links -->
+  <section class="social-section">
+    <h3>हमें सोशल मीडिया पर फॉलो करें</h3>
+    <div class="social-links">
+      <a href="https://www.facebook.com/people/Shri-amarnath-jan-shakti-sewa-mandal-ram-nagar-karnal/100067520252003/"
+        class="social-icon" title="Facebook" target="_blank">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://www.instagram.com/shri_amarnath_janshakti/" class="social-icon" title="Instagram"
+        target="_blank">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.youtube.com/" class="social-icon" title="YouTube" target="_blank">
+        <i class="fab fa-youtube"></i>
+      </a>
+      <a href="mailto:shriamarnathjanshakti@gmail.com" class="social-icon" title="Email" target="_blank">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+  </section>
 
-            <article class="event" role="listitem">
-              <div class="year">Today</div>
-              <div>
-                <h3>Planning & Future Plans</h3>
-                <p class="muted">Today SAJSSM continues to enhance their services for Next Yatra 2026 and eagerly
-                  waiting to serve for humanity in Next Yatra Too.</p>
-              </div>
-            </article>
-          </div>
-        </section>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>About SAJSSM</h4>
+        <p>श्री अमरनाथ जनशक्ति सेवा मंडल यात्रियों की सेवा में समर्पित एक संस्था है।</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="Yatra.html">Yatra</a></li>
+          <li><a href="Donation.html">Donations</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <p>📞 9466132732</p>
+        <p>📧 Shriamarnathjanshakti@gmail.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Shri Amarnath JanShakti Sewa Mandal — All rights reserved.</p>
+    </div>
+  </footer>
 
-
-
-    </main>
-
-    <footer>
-      &copy; <span id="year"></span> Shri Amarnath JanShakti Sewa Mandal — All rights reserved.
-    </footer>
-  </div>
-
-  <script>
-    // Small script to set current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="script.js"></script>
 </body>
 
 </html>

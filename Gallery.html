@@ -4,35 +4,147 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gallery | SAJSSM</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Gallery | Shri Amarnath JanShakti Sewa Mandal</title>
+    <link rel="stylesheet" href="Style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
-    <header id="heading">
-        <h1>Gallery</h1>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="logo-section">
+                <img src="./Images/logo.png.png" alt="SAJSSM Logo" class="logo" />
+                <div class="header-text">
+                    <h1 class="site-title">SHRI AMARNATH JANSHAKTI SEWA MANDAL</h1>
+                    <p class="registration">REG.01104 | H.No. 86/5 Gandhi Nagar, Karnal Hry. (132001)</p>
+                    <p class="contact-info">📞 9466132732 | 9466132733 | 7015345275 | 9996181668</p>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="navbar" id="navbar">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="history.html" class="nav-link">History</a></li>
+                <li><a href="Yatra.html" class="nav-link">Yatra</a></li>
+                <li><a href="Donation.html" class="nav-link">Donations</a></li>
+                <li><a href="News.html" class="nav-link">News & Events</a></li>
+                <li><a href="Gallery.html" class="nav-link active">Gallery</a></li>
+                <li><a href="Contact_Us.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <nav class="nav">
-        <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="donation.html">Donation</a></li>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2 class="hero-title">हमारी गैलरी</h2>
+            <p class="hero-subtitle">सेवा के क्षणों को देखें</p>
+            <p class="hero-description">पवित्र यात्रा में हमारी सेवा के अनमोल पल</p>
+        </div>
+        <div class="hero-image">
+            <img src="./Images/Yatra2.jpg" alt="Gallery" class="responsive-image" />
+        </div>
+    </section>
 
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="history.html">History</a></li>
-            <li><a href="Contact_Us.html">Contact</a></li>
-        </ul>
-    </nav>
+    <!-- Gallery Section -->
+    <section class="features">
+        <h2 class="section-title">सेवा के पल</h2>
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 40px 20px;">
+            <div class="feature-card" style="overflow: hidden;">
+                <img src="./Images/Yatra2.jpg" alt="लंगर सेवा"
+                    style="width: 100%; height: 250px; object-fit: cover; border-radius: 10px;" />
+                <h3 style="margin-top: 15px;">लंगर सेवा</h3>
+                <p>यात्रियों को निःशुल्क पौष्टिक भोजन परोसने की हमारी सेवा</p>
+            </div>
+            <div class="feature-card" style="overflow: hidden;">
+                <img src="./Images/Yatra2.jpg" alt="चिकित्सा सहायता"
+                    style="width: 100%; height: 250px; object-fit: cover; border-radius: 10px;" />
+                <h3 style="margin-top: 15px;">चिकित्सा सहायता</h3>
+                <p>यात्रियों को आवश्यक स्वास्थ्य सेवा प्रदान करना</p>
+            </div>
+            <div class="feature-card" style="overflow: hidden;">
+                <img src="./Images/Yatra2.jpg" alt="सामाजिक सेवा"
+                    style="width: 100%; height: 250px; object-fit: cover; border-radius: 10px;" />
+                <h3 style="margin-top: 15px;">सामाजिक सेवा</h3>
+                <p>समाज के सभी वर्गों की सहायता करना हमारा लक्ष्य</p>
+            </div>
+            <div class="feature-card" style="overflow: hidden;">
+                <img src="./Images/Yatra2.jpg" alt="स्वयंसेवक टीम"
+                    style="width: 100%; height: 250px; object-fit: cover; border-radius: 10px;" />
+                <h3 style="margin-top: 15px;">स्वयंसेवक टीम</h3>
+                <p>हमारे समर्पित स्वयंसेवकों का टीम हमेशा तैयार रहता है</p>
+            </div>
+            <div class="feature-card" style="overflow: hidden;">
+                <img src="./Images/Yatra2.jpg" alt="यात्री सहायता"
+                    style="width: 100%; height: 250px; object-fit: cover; border-radius: 10px;" />
+                <h3 style="margin-top: 15px;">यात्री सहायता</h3>
+                <p>प्रत्येक यात्री को आवश्यक सहायता और मार्गदर्शन</p>
+            </div>
+            <div class="feature-card" style="overflow: hidden;">
+                <img src="./Images/Yatra2.jpg" alt="सामुदायिक कार्यक्रम"
+                    style="width: 100%; height: 250px; object-fit: cover; border-radius: 10px;" />
+                <h3 style="margin-top: 15px;">सामुदायिक कार्यक्रम</h3>
+                <p>समुदाय के विकास के लिए विभिन्न कार्यक्रम आयोजित करते हैं</p>
+            </div>
+        </div>
+    </section>
 
-    <main class="image-gallery">
-        <h2>Photo Highlights</h2><br>
-        <img src="/Front_End/SAJSSM/Images/Yatra2.jpg" alt="Langar Service" class="img" height="75%" width="100%" />
+    <!-- Social Media Links -->
+    <section class="social-section">
+        <h3>हमें सोशल मीडिया पर फॉलो करें</h3>
+        <div class="social-links">
+            <a href="https://www.facebook.com/people/Shri-amarnath-jan-shakti-sewa-mandal-ram-nagar-karnal/100067520252003/"
+                class="social-icon" title="Facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/shri_amarnath_janshakti/" class="social-icon" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/" class="social-icon" title="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="mailto:shriamarnathjanshakti@gmail.com" class="social-icon" title="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </section>
 
-    </main>
-    <footer>
-        &copy; <span id="year"></span> Shri Amarnath JanShakti Sewa Mandal — All rights reserved.
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About SAJSSM</h4>
+                <p>श्री अमरनाथ जनशक्ति सेवा मंडल यात्रियों की सेवा में समर्पित एक संस्था है।</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="Yatra.html">Yatra</a></li>
+                    <li><a href="Donation.html">Donations</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>📞 9466132732</p>
+                <p>📧 info@sajssm.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> Shri Amarnath JanShakti Sewa Mandal — All rights reserved.</p>
+        </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

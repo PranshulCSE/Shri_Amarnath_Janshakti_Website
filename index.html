@@ -4,36 +4,148 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home | SAJSSM</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Home | Shri Amarnath JanShakti Sewa Mandal</title>
+    <link rel="stylesheet" href="Style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
-    <header>
-        <img src="/Front_End/SAJSSM/Images/logo.png.png" alt="SAJSSM Logo" class="logo" />
-        <h1>SHRI AMARNATH JANSHAKTI SEWA MANDAL</h1>
-        <p>REG.01104 | H.No. 86/5 Gandhi Nagar, Karnal Hry. (132001)</p>
-        <p>Contact: 9466132732, 9466132733, 7015345275, 9996181668</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="logo-section">
+              
+                <div class="out">
+                    <img src="./Images/logo.png.png" alt="SAJSSM Logo" class="logo" />
+                    <div class="header-text">
+                        <h1 class="site-title">SHRI AMARNATH JANSHAKTI SEWA MANDAL</h1>
+                        <p class="registration">REG.01104 | H.No. 86/5 Gandhi Nagar, Karnal Hry. (132001)</p>
+                        <p class="contact-info">📞 9466132732 | 9466132733 | 7015345275 | 9996181668</p>
+                    </div>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="navbar" id="navbar">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="history.html" class="nav-link">History</a></li>
+                <li><a href="Yatra.html" class="nav-link">Yatra</a></li>
+                <li><a href="Donation.html" class="nav-link">Donations</a></li>
+                <li><a href="News.html" class="nav-link">News & Events</a></li>
+                <li><a href="Gallery.html" class="nav-link">Gallery</a></li>
+                <li><a href="Contact_Us.html" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
     </header>
-    <nav class="nav">
-        <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="About.html">About Us</a></li>
-            <li><a href="Donation.html">Donation</a></li>
-            <li><a href="Gallery.html">Gallery</a></li>
-            <li><a href="history.html">History</a></li>
-            <li><a href="Contact_Us.html">Contact</a></li>
 
-        </ul>
-    </nav>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h4 class="hero-title">🙏 Welcome to SAJSSM 🙏</h4>
+            <p class="hero-subtitle">Serving Pilgrims with Love & Compassion</p>
+            <p class="hero-description">Providing free Langar services to Shri Amarnath Ji Yatris</p>
+            <div class="hero-buttons">
+                <a href="Yatra.html" class="btn btn-primary">Learn About Yatra</a>
+                <a href="Donation.html" class="btn btn-secondary">Donate Now</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="./Images/Visiting_SAJSSM.jpg" alt="Amarnath Yatra" class="responsive-image" />
+        </div>
+    </section>
 
-    <main>
-        <h2>Welcome</h2>
-        <p>We provide free Langar and support services to pilgrims of Shri Amarnath Ji Yatra.</p>
-    </main>
-    <footer>
-        &copy; <span id="year"></span> Shri Amarnath JanShakti Sewa Mandal — All rights reserved.
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">Our Services</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🍲</div>
+                <h3>Free Langar Services</h3>
+                <p>Providing nutritious meals to all pilgrims during their sacred journey to Amarnath Ji.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏥</div>
+                <h3>Medical Support</h3>
+                <p>Basic medicines are available for pilgrims throughout the yatra.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Safety & Guidance</h3>
+                <p> Guidance and safety measures to ensure a secure pilgrimage experience.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">❤️</div>
+                <h3>Community Service</h3>
+                <p>Dedicated volunteers working selflessly to serve the pilgrims with utmost care.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <h2>Join Us in Serving the Pilgrims</h2>
+        <p>Your support helps us provide better services to thousands of pilgrims every year</p>
+        <div class="cta-buttons">
+            <a href="Donation.html" class="btn btn-primary">Make a Donation</a>
+            <a href="Contact_Us.html" class="btn btn-secondary">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Social Media Links -->
+    <section class="social-section">
+        <h3>Follow Us On Social Media</h3>
+        <div class="social-links">
+            <a href="https://www.facebook.com/people/Shri-Amarnath-JanShakti-Sewa-Mandal-Karnal/100067520252003/" class="social-icon" title="Facebook" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/shri.amarnath.janshakti/" class="social-icon" title="Instagram" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://youtube.com/@shriamarnathjanshakti?si=Dh2etWlOETUtBJEL" class="social-icon" title="YouTube" target="_blank">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="mailto:shriamarnathjanshakti@.com" class="social-icon" title="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About SAJSSM</h4>
+                <p>Shri Amarnath JanShakti Sewa Mandal is dedicated to serving pilgrims with free langar services during
+                    their sacred yatra of Baba Barfani Ji.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="Yatra.html">Yatra Info</a></li>
+                    <li><a href="Donation.html">Donations</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p>📍 H.No. 186/5 Gandhi Nagar, Karnal, Haryana 132001</p>
+                <p>📞 9466132732,33</p>
+                <p>✉️ Shriamarnathjanshakti@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <span id="year"></span> Shri Amarnath JanShakti Sewa Mandal — All rights reserved.
+        </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
