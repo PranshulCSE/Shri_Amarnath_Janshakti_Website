@@ -14,29 +14,31 @@
     <header class="header">
         <div class="header-top">
             <div class="logo-section">
-                <img src="./Images/logo.png.png" alt="SAJSSM Logo" class="logo" />
-                <div class="header-text">
-                    <h1 class="site-title">SHRI AMARNATH JANSHAKTI SEWA MANDAL</h1>
-                    <p class="registration">REG.01104 | H.No. 86/5 Gandhi Nagar, Karnal Hry. (132001)</p>
-                    <p class="contact-info">📞 9466132732 | 9466132733 | 7015345275 | 9996181668</p>
+    
+                <div class="out">
+                    <img src="./Images/logo.png.png" alt="SAJSSM Logo" class="logo" />
+                    <div class="header-text">
+                        <h1 class="site-title">SHRI AMARNATH JANSHAKTI SEWA MANDAL</h1>
+                        <p class="registration">REG.01104 | H.No. 186/5 Gandhi Nagar, Karnal Hry. (132001)</p>
+                        <p class="contact-info">📞 9466132732 | 9466132733 | 7015345275 | 9996181668</p>
+                    </div>
                 </div>
             </div>
             <button class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-
+    
         <!-- Navigation Bar -->
         <nav class="navbar" id="navbar">
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html" class="nav-link active">Home</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="history.html" class="nav-link">History</a></li>
                 <li><a href="Yatra.html" class="nav-link">Yatra</a></li>
                 <li><a href="Donation.html" class="nav-link">Donations</a></li>
-                <li><a href="News.html" class="nav-link">News & Events</a></li>
                 <li><a href="Gallery.html" class="nav-link">Gallery</a></li>
-                <li><a href="Contact_Us.html" class="nav-link active">Contact</a></li>
+                <li><a href="Contact_Us.html" class="nav-link">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -71,12 +73,7 @@
             <div class="feature-card">
                 <div class="feature-icon">📍</div>
                 <h3>पता</h3>
-                <p>H.No. 86/5, गांधी नगर<br />करनाल, हरियाणा (132001)<br />भारत</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🕐</div>
-                <h3>कार्य समय</h3>
-                <p>सोमवार - शुक्रवार<br />09:00 AM - 06:00 PM<br />शनिवार - 10:00 AM - 04:00 PM</p>
+                <p>H.No. 186/5, गांधी नगर<br />करनाल, हरियाणा (132001)<br />भारत</p>
             </div>
         </div>
     </section>
@@ -85,7 +82,7 @@
     <section class="cta-section">
         <h2>हमें एक संदेश भेजें</h2>
         <p>कृपया नीचे दिए गए फॉर्म को भरें और हम जल्द ही आपसे संपर्क करेंगे</p>
-        <form class="contact-form" id="contactForm">
+        <form class="contact-form" id="contactForm" method="post" action="mailto:shriamarnathjanshakti@gmail.com" enctype="text/plain">
             <div class="form-row">
                 <input type="text" placeholder="आपका नाम" required />
             </div>
@@ -93,7 +90,7 @@
                 <input type="email" placeholder="आपका ईमेल" required />
             </div>
             <div class="form-row">
-                <input type="phone" placeholder="आपका फोन नंबर" />
+                <input type="tel" placeholder="आपका फोन नंबर" required />
             </div>
             <div class="form-row">
                 <textarea placeholder="आपका संदेश" rows="5" required></textarea>
