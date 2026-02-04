@@ -29,23 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Set active link based on current page
   setActiveLink();
 
-  // Contact Form Submission
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    contactForm.addEventListener('submit', handleContactForm);
-  }
-
-  // Donation Form Submission
-  const donationForm = document.getElementById('donationForm');
-  if (donationForm) {
-    donationForm.addEventListener('submit', handleDonationForm);
-  }
-
-  // Newsletter Form Submission
-  const newsletterForm = document.getElementById('newsletterForm');
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', handleNewsletterForm);
-  }
+  // Attach submit handler to all forms (sends email, shows popup, resets form)
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', handleAnyFormSubmit);
+  });
 
   // Add scroll animation
   addScrollAnimations();
@@ -68,63 +55,105 @@ function setActiveLink() {
   });
 }
 
-// ===== Handle Contact Form =====
-function handleContactForm(event) {
+// ===== Handle Any Form Submission (send email, reset, show popup) =====
+function handleAnyFormSubmit(event) {
   event.preventDefault();
-  
-  const formData = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    subject: document.getElementById('subject').value,
-    message: document.getElementById('message').value
-  };
+  const form = event.target;
+  const formName = form.getAttribute('name') || form.id || 'Website Form';
 
-  // Simulate form submission
-  console.log('Contact Form Data:', formData);
-  
-  // Show success message
-  showNotification('Message sent successfully! We will contact you soon.', 'success');
-  
-  // Reset form
-  event.target.reset();
+  // Build an object from the submitted form (handles inputs with same names correctly)
+  const fd = new FormData(form);
+  const data = {};
+  fd.forEach((value, key) => {
+    // If multiple fields share the same name, collect them into an array
+    if (Object.prototype.hasOwnProperty.call(data, key)) {
+      if (Array.isArray(data[key])) data[key].push(value);
+      else data[key] = [data[key], value];
+    } else {
+      data[key] = value;
+    }
+  });
+
+  // Optional: show a temporary notification
+  showNotification('Sending message...', 'info');
+
+  sendEmail(formName, data)
+    .then(() => {
+      showPopup('Thank you! Your message has been sent successfully.');
+      form.reset();
+    })
+    .catch(err => {
+      console.error('Form send failed:', err);
+      showNotification('Failed to send message. Please try again later.', 'warning');
+    });
 }
 
-// ===== Handle Donation Form =====
-function handleDonationForm(event) {
-  event.preventDefault();
-  
-  const formData = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    amount: document.getElementById('amount').value,
-    message: document.getElementById('message').value,
-    anonymous: document.getElementById('anonymous').checked
+// ===== Send email (EmailJS preferred, fallback to mailto) =====
+function sendEmail(formName, dataObj) {
+  // Configuration - replace these with your actual values
+  const RECIPIENT_EMAIL = 'youremail@example.com'; // <-- change this
+  const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'; // <-- change this
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'; // <-- change this
+  const EMAILJS_USER_ID = 'YOUR_USER_ID'; // <-- change this
+
+  const templateParams = {
+    form_name: formName,
+    ...dataObj
   };
 
-  console.log('Donation Form Data:', formData);
-  
-  // Show success message
-  showNotification(`Thank you for donating ₹${formData.amount}! Your contribution helps us serve more pilgrims.`, 'success');
-  
-  // Reset form
-  event.target.reset();
+  if (window.emailjs && emailjs.send) {
+    // If a user id is available, init (safe to call multiple times)
+    if (emailjs.init && EMAILJS_USER_ID) emailjs.init(EMAILJS_USER_ID);
+    return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+  }
+
+  // Fallback: open user's email client (mailto:) — user must send manually
+  const subject = encodeURIComponent(`${formName} Submission`);
+  const body = encodeURIComponent(Object.entries(dataObj).map(([k, v]) => `${k}: ${v}`).join('\n'));
+  const mailto = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`;
+  window.open(mailto, '_blank');
+  return Promise.resolve();
 }
 
-// ===== Handle Newsletter Form =====
-function handleNewsletterForm(event) {
-  event.preventDefault();
-  
-  const email = event.target.querySelector('input[type="email"]').value;
-  
-  console.log('Newsletter Email:', email);
-  
-  // Show success message
-  showNotification('Successfully subscribed to our newsletter!', 'success');
-  
-  // Reset form
-  event.target.reset();
+// ===== Popup Thank You =====
+function showPopup(message, timeout = 4000) {
+  const overlay = document.createElement('div');
+  overlay.className = 'form-popup-overlay';
+  overlay.style.cssText = `
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    z-index: 10001;
+  `;
+
+  const box = document.createElement('div');
+  box.className = 'form-popup-box';
+  box.style.cssText = `
+    background: #fff;
+    color: #111;
+    padding: 28px;
+    border-radius: 10px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    text-align: center;
+    font-weight: 600;
+  `;
+
+  box.innerHTML = `<div style="font-size:18px;margin-bottom:8px">${message}</div>
+                   <button type="button" class="form-popup-close" style="margin-top:12px;padding:8px 14px;border-radius:6px;background:#06a77d;color:#fff;border:none;cursor:pointer">Close</button>`;
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+
+  const close = () => overlay.remove();
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  box.querySelector('.form-popup-close').addEventListener('click', close);
+
+  setTimeout(close, timeout);
 }
 
 // ===== Show Notification =====
@@ -133,13 +162,14 @@ function showNotification(message, type = 'info') {
   notification.className = `notification notification-${type}`;
   notification.textContent = message;
   
-  // Add styles dynamically
+  // Add styles dynamically (different colors per type)
+  const bgColor = type === 'success' ? '#06a77d' : type === 'warning' ? '#f6a11b' : type === 'danger' ? '#d62828' : '#004e89';
   notification.style.cssText = `
     position: fixed;
     top: 20px;
     right: 20px;
     padding: 16px 24px;
-    background: ${type === 'success' ? '#06a77d' : '#004e89'};
+    background: ${bgColor};
     color: white;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
