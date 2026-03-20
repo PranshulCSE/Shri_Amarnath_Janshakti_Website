@@ -1,0 +1,46 @@
+.contact-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 22px;
+  margin-top: 36px;
+}
+.info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 28px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border-top: 4px solid #ff6b35;
+  transition: transform 0.3s;
+}
+.info-card:hover { transform: translateY(-8px); }
+.info-icon {
+  font-size: 2.4rem;
+  display: block;
+  margin-bottom: 12px;
+  animation: bounce 2.4s infinite;
+}
+.info-card h3 {
+  color: #004e89;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.info-card p {
+  color: #666;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+.info-card a {
+  color: #ff6b35;
+  text-decoration: none;
+  word-break: break-all;
+}
+.info-card a:hover { text-decoration: underline; }
+
+/* Override form-wrap to sit on the dark CTA background */
+.contact-form-inner {
+  background: white;
+  text-align: left;
+  margin-top: 0;
+}

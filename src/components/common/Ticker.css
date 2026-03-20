@@ -1,0 +1,29 @@
+.ticker {
+  background: linear-gradient(90deg, #004e89, #0056a8);
+  color: white;
+  padding: 9px 0;
+  overflow: hidden;
+}
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+.ticker-track {
+  display: flex;
+  animation: ticker 28s linear infinite;
+  white-space: nowrap;
+  align-items: center;
+}
+.ticker-track span {
+  padding: 0 48px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.ticker-track i {
+  color: #f7931e;
+  margin-right: 8px;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}

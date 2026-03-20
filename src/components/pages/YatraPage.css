@@ -1,0 +1,138 @@
+.page-header {
+  background: linear-gradient(135deg, #004e89, #ff6b35);
+  color: white;
+  padding: 65px 44px;
+  text-align: center;
+}
+.page-header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+.page-header p  { font-size: 1.08rem; opacity: 0.95; }
+
+.yatra-sub-heading {
+  font-size: 1.5rem;
+  color: #004e89;
+  font-weight: 700;
+  text-align: center;
+  margin: 44px 0 22px;
+}
+
+/* Action Grid */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+  gap: 14px;
+  margin-bottom: 50px;
+}
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.86rem;
+  text-decoration: none;
+  background: linear-gradient(135deg, #004e89, #ff6b35);
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+.action-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+.action-btn i { font-size: 1.25rem; flex-shrink: 0; }
+
+/* Yatra Sections */
+.yatra-section { margin-bottom: 55px; }
+.yatra-divider {
+  width: 70px; height: 4px;
+  background: linear-gradient(90deg, #ff6b35, #f7931e);
+  border-radius: 2px;
+  margin-bottom: 16px;
+}
+.yatra-section-title { font-size: 1.5rem; color: #004e89; font-weight: 700; margin-bottom: 20px; }
+
+/* 2-col layout inside yatra section */
+.yatra-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
+.yatra-text p { color: #555; font-size: 0.9rem; line-height: 1.82; margin-bottom: 10px; }
+
+/* Routes */
+.routes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+.route-card {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  border-top: 4px solid #ff6b35;
+  transition: transform 0.3s;
+}
+.route-card:hover { transform: translateY(-6px); }
+.route-card h3 { font-size: 1rem; color: #004e89; font-weight: 700; margin-bottom: 12px; }
+.route-card p  { color: #666; font-size: 0.84rem; line-height: 1.6; margin-bottom: 5px; }
+
+/* Langar */
+.langar-box {
+  background: white;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.langar-box ul { list-style: none; padding: 0; }
+.langar-box li { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+.langar-box li strong { color: #004e89; font-size: 0.88rem; min-width: 130px; flex-shrink: 0; }
+.langar-box li span  { color: #555; font-size: 0.88rem; line-height: 1.6; }
+.langar-note {
+  margin-top: 16px;
+  padding: 14px;
+  background: rgba(255,107,53,0.06);
+  border-left: 4px solid #ff6b35;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
+  color: #444;
+  line-height: 1.7;
+}
+
+/* Tips */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px;
+}
+.tip-card {
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  border-top: 4px solid #ff6b35;
+  transition: transform 0.3s;
+}
+.tip-card:hover { transform: translateY(-6px); }
+.tip-icon { font-size: 2.2rem; margin-bottom: 10px; display: block; }
+.tip-card h3 { font-size: 0.92rem; color: #004e89; font-weight: 700; margin-bottom: 7px; }
+.tip-card p  { color: #666; font-size: 0.81rem; line-height: 1.5; }
+
+/* Dos & Don'ts */
+.dos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.dos-box, .donts-box {
+  background: white;
+  border-radius: 12px;
+  padding: 26px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.dos-box h3   { color: #06a77d; font-size: 1.02rem; font-weight: 700; margin-bottom: 14px; }
+.donts-box h3 { color: #d62828; font-size: 1.02rem; font-weight: 700; margin-bottom: 14px; }
+.dos-box ul, .donts-box ul { padding-left: 18px; }
+.dos-box li, .donts-box li { color: #555; font-size: 0.84rem; line-height: 1.75; margin-bottom: 4px; }
+
+@media (max-width: 768px) {
+  .page-header { padding: 44px 20px; }
+  .page-header h1 { font-size: 1.6rem; }
+  .yatra-2col { grid-template-columns: 1fr; }
+  .dos-grid   { grid-template-columns: 1fr; }
+  .langar-box li { flex-direction: column; gap: 4px; }
+  .langar-box li strong { min-width: unset; }
+}
