@@ -1,0 +1,29 @@
+.timeline-box {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 38px;
+  margin-top: 32px;
+}
+.tl-item {
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  border-radius: 0 10px 10px 0;
+  transition: background 0.3s;
+}
+.tl-item:last-child { margin-bottom: 0; }
+.tl-item:hover { background: rgba(255, 107, 53, 0.03); }
+.tl-item h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.tl-item p {
+  color: #555;
+  font-size: 0.87rem;
+  line-height: 1.75;
+}
+
+@media (max-width: 768px) {
+  .timeline-box { padding: 22px; }
+}

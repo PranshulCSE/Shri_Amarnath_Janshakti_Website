@@ -1,0 +1,61 @@
+/* ── Home Page Specific Styles ──────────────── */
+.stats-bar {
+  background: white;
+  padding: 40px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 10;
+}
+
+.stats-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item h3 {
+  font-size: 2.2rem;
+  color: var(--primary);
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.stat-item p {
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.highlight-strip {
+  background: linear-gradient(90deg, var(--accent), #003a66);
+  color: white;
+  padding: 18px 20px;
+  text-align: center;
+  border-top: 3px solid #f7931e; /* This is the "Golden Line" */
+  border-bottom: 3px solid #f7931e;
+}
+
+.highlight-strip p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.highlight-strip span {
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .stat-item h3 { font-size: 1.8rem; }
+  .highlight-strip p { font-size: 0.95rem; }
+}

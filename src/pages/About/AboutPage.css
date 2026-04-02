@@ -1,0 +1,90 @@
+/* ── About Page Specific Styles ──────────────── */
+.about-box {
+  background: white;
+  padding: 50px 60px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  line-height: 1.8;
+  color: #444;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.about-box h2 {
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.about-box h3 {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.about-box p {
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.about-box ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.about-box li {
+  padding: 12px 0 12px 35px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  font-size: 0.98rem;
+  position: relative;
+}
+
+.about-box li::before {
+  content: '🎯';
+  position: absolute;
+  left: 0;
+  font-size: 1.1rem;
+}
+
+.org-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  text-align: left;
+  margin-top: 30px;
+}
+
+.org-details p {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  border-left: 3px solid var(--secondary);
+}
+
+.org-details strong {
+  display: block;
+  color: var(--secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 768px) {
+  .about-box { padding: 30px 20px; }
+  .org-details { grid-template-columns: 1fr; }
+}

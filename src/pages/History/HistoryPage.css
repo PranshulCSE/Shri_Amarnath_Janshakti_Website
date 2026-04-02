@@ -1,0 +1,70 @@
+/* ── History Page Specific Styles ──────────────── */
+.timeline-box {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.timeline-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 2px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tl-item {
+  padding: 30px 0 30px 50px;
+  position: relative;
+  margin-bottom: 20px; /* Fixing the gap between divs */
+}
+
+.tl-item::after {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 4px solid var(--primary);
+  border-radius: 50%;
+  z-index: 5;
+}
+
+.tl-item h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tl-item p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.8;
+  background: white;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid var(--primary);
+  transition: transform 0.3s ease;
+}
+
+.tl-item:hover p {
+  transform: translateX(10px);
+}
+
+@media (max-width: 768px) {
+  .timeline-box { margin: 30px auto; }
+  .tl-item { padding: 20px 0 20px 40px; }
+  .timeline-box::before { left: 15px; }
+  .tl-item::after { left: 5px; top: 26px; }
+  .tl-item h3 { font-size: 1.15rem; }
+  .tl-item p { font-size: 0.92rem; padding: 15px 18px; }
+}

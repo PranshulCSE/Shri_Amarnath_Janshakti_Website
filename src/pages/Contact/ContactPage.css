@@ -1,0 +1,66 @@
+/* ── Contact Page Specific Styles ──────────────── */
+.contact-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.info-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  border-bottom: 4px solid var(--accent);
+}
+
+.info-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--primary);
+}
+
+.info-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.info-card h3 {
+  font-size: 1.3rem;
+  color: var(--accent);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.info-card p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+.contact-form-inner {
+  max-width: 800px;
+  margin-top: 40px;
+  text-align: left;
+}
+
+.contact-form-inner .form-row {
+  margin-bottom: 20px;
+}
+
+/* Align labels and inputs better for premium look */
+.contact-form-inner .form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .contact-info-grid { grid-template-columns: 1fr; }
+  .info-card { padding: 30px 20px; }
+}
