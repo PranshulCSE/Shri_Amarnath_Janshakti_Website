@@ -19,7 +19,7 @@ export default function AdminDashboard({ token, onLogout, navigate }) {
 
   // ✅ FIXED API FUNCTION
   const api = useCallback(async (url, options = {}) => {
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+    const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
     const fullUrl = url.startsWith('http') ? url : `${apiBaseUrl}${url}`;
 
     const res = await fetch(fullUrl, {

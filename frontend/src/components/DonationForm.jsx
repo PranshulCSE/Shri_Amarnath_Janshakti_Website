@@ -138,11 +138,11 @@ const DonationForm = ({ onSuccess }) => {
             formDataToSubmit.append('screenshot', formData.screenshot);
 
             // Make API call (20s timeout — file upload may be slow)
-            const apiBase = import.meta.env.VITE_API_BASE_URL || 'https://shri-amarnath-janshakti-website.onrender.com/api';
+            const apiBase = (import.meta.env.VITE_API_BASE_URL || 'https://shri-amarnath-janshakti-website.onrender.com').replace(/\/+$/, '');
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 20000);
 
-            const response = await fetch(`${apiBase}/donations`, {
+            const response = await fetch(`${apiBase}/api/donations`, {
                 method: 'POST',
                 body: formDataToSubmit,
                 signal: controller.signal,

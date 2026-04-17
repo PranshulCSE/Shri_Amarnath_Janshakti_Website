@@ -16,7 +16,8 @@ export default function GalleryPage() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/gallery`);
+        const apiBase = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
+        const res = await fetch(`${apiBase}/api/gallery`);
         if (res.ok) {
           const data = await res.json();
           // API actually returns { data: [...] } for paginated photos

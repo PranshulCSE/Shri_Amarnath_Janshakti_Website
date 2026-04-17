@@ -14,6 +14,7 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
   'http://127.0.0.1:5173',
+  'https://shri-amarnath-janshakti.netlify.app',
   'https://shri-amarnath-janshakti-website.onrender.com',
   /\.netlify\.app$/,
 ];
@@ -31,6 +32,9 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
+
+// Handle preflight across all routes
+app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 
 // Middleware

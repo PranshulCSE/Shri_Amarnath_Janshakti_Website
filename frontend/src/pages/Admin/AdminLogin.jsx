@@ -13,7 +13,7 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      const apiBase = import.meta.env.VITE_API_BASE_URL || 'https://shri-amarnath-janshakti-website.onrender.com';
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || 'https://shri-amarnath-janshakti-website.onrender.com').replace(/\/+$/, '');
 
       // AbortController gives us a 15-second timeout
       const controller = new AbortController();

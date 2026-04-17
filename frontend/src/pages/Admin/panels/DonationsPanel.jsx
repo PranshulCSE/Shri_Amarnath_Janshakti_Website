@@ -130,7 +130,7 @@ export default function DonationsPanel({ api, onUpdate }) {
                             {d.screenshot ? (
                               <a href={d.screenshot} target="_blank" rel="noreferrer" title="Click to view full size">
                                 <img
-                                  src={d.screenshot.startsWith('http') ? d.screenshot : `${import.meta.env.VITE_API_BASE_URL.replace('/api', '')}${d.screenshot}`}
+                                  src={d.screenshot.startsWith('http') ? d.screenshot : `${(import.meta.env.VITE_API_BASE_URL || '').replace(/\/api\/?$/, '').replace(/\/+$/, '')}${d.screenshot}`}
 
                                   alt="Payment Screenshot"
                                   style={{
