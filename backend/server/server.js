@@ -33,8 +33,6 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// Handle preflight across all routes
-app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 
 // Middleware
