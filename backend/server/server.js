@@ -52,6 +52,7 @@ const allowedOrigins = [
   'http://127.0.0.1:5001',
   /\.netlify\.app$/,
   /\.vercel\.app$/,
+  /\.onrender\.com$/,
 ];
 
 const corsOptions = {
@@ -102,13 +103,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// Production - serve frontend static files
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '..', 'dist')));
-  app.use((req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
-  });
-}
+// ✅ Backend API only - frontend deployed separately
+// Static frontend serving removed for cleaner API architecture
 
 // ✅ Global error handler
 app.use((err, req, res, next) => {
