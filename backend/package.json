@@ -21,7 +21,7 @@
         "dev": "node server/server.js",
         "seed": "node server/seed.js",
         "create-admin": "node create-admin.js",
-        "build": "echo 'No build needed for Node.js server'"
+        "build": "npm install"
     },
     "description": "Express backend for SAJSSM website",
     "keywords": [
