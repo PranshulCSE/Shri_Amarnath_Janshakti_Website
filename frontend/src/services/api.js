@@ -16,9 +16,13 @@ const API = axios.create({
 
 // Add token to requests if it exists
 API.interceptors.request.use((config) => {
-    const token = localStorage.getItem('adminToken');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    try {
+        const token = localStorage.getItem('adminToken');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+    } catch (err) {
+        console.error('Error accessing localStorage:', err);
     }
     return config;
 });
@@ -27,17 +31,19 @@ API.interceptors.request.use((config) => {
 API.interceptors.response.use(
     (response) => response,
     (error) => {
-        // ✅ REMOVED debugLog call - it was breaking error handling
-
         console.error('API Error:', {
             status: error.response?.status || null,
             url: error.config?.url || null,
             message: error.message,
         });
 
-        // ✅ Handle 401 Unauthorized
+        //  Handle 401 Unauthorized
         if (error.response?.status === 401) {
-            localStorage.removeItem('adminToken');
+            try {
+                localStorage.removeItem('adminToken');
+            } catch (err) {
+                console.error('Error clearing localStorage:', err);
+            }
             window.location.href = '/admin/login';
         }
 

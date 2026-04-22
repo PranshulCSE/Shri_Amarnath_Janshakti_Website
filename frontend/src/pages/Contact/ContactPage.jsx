@@ -25,7 +25,7 @@ export default function ContactPage() {
     setError('');
 
     try {
-      const apiUrl = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
+      const apiUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);

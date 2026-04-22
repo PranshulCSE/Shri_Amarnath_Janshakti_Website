@@ -242,26 +242,88 @@ class DonationController {
         try {
             const { phone } = req.params;
             const normalizedPhone = typeof phone === 'string' ? phone.trim() : '';
-            const phoneRegex = /^\+?[0-9]{7,15}$/;
 
+            // Validate phone format (10 digits only)
+            const phoneRegex = /^\d{10}$/;
             if (!normalizedPhone || !phoneRegex.test(normalizedPhone)) {
                 return res.status(400).json({
                     success: false,
-                    message: 'Invalid phone number format',
+                    message: 'Invalid phone number. Must be exactly 10 digits.',
                 });
             }
 
             const donations = await DonationService.getDonationsByPhone(normalizedPhone);
+
+            if (!donations || donations.length === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'No donations found for this phone number',
+                });
+            }
+
             res.status(200).json({
                 success: true,
                 message: 'Donations retrieved successfully',
                 data: donations,
             });
         } catch (error) {
-            console.error('Error fetching donations:', error);
+            console.error('❌ Error fetching donations by phone:', error);
             res.status(500).json({
                 success: false,
                 message: 'Error fetching donations',
+            });
+        }
+    }
+
+    /**
+     * PUT /donations/:id/reject (Admin Only)
+     * Reject a donation
+     * Required: admin authentication
+     */
+    static async rejectDonation(req, res) {
+        try {
+            const { id } = req.params;
+            const { reason } = req.body || {};
+            const adminId = req.adminId; // From auth middleware
+
+            if (!adminId) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Unauthorized - admin authentication required',
+                });
+            }
+
+            const donation = await DonationService.rejectDonation(
+                id,
+                adminId,
+                reason || 'Rejected by admin'
+            );
+
+            res.status(200).json({
+                success: true,
+                message: 'Donation rejected successfully',
+                data: donation,
+            });
+        } catch (error) {
+            console.error('Error rejecting donation:', error);
+
+            if (error.message === 'Donation not found') {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Donation not found',
+                });
+            }
+
+            if (error.message === 'Donation is already verified') {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Cannot reject a donation that is already verified',
+                });
+            }
+
+            res.status(500).json({
+                success: false,
+                message: 'Error rejecting donation',
             });
         }
     }

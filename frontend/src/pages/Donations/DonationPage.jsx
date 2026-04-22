@@ -69,7 +69,7 @@ export default function DonationPage() {
       Object.keys(form).forEach(k => fd.append(k, form[k]));
       fd.append('screenshot', screenshot);
 
-      const apiBase = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
       const res = await fetch(`${apiBase}/api/donations`, { 
         method: 'POST',
         body: fd,

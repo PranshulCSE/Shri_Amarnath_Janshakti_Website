@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
 
 export default function AdminLogin() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,7 +15,7 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      const apiBase = (import.meta.env.VITE_API_BASE_URL || 'https://shri-amarnath-janshakti-website.onrender.com').replace(/\/+$/, '');
+      const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
 
       // AbortController gives us a 15-second timeout
       const controller = new AbortController();
@@ -39,8 +41,13 @@ export default function AdminLogin() {
       }
 
       if (!res.ok) throw new Error(data.message || 'Login failed');
-      localStorage.setItem('adminToken', data.token);
-      window.location.href = '/admin';
+      try {
+        localStorage.setItem('adminToken', data.data.token);
+      } catch (err) {
+        console.error('Error storing token:', err);
+        throw new Error('Failed to save authentication. Please clear browser storage and try again.');
+      }
+      navigate('/admin', { replace: true });
     } catch (err) {
       if (err.name === 'AbortError') {
         setError('Request timed out. The backend may be starting up — try again in 30 seconds.');

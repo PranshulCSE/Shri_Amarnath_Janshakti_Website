@@ -68,7 +68,7 @@ export default function YatraPage() {
   useEffect(() => {
     async function loadDocs() {
       try {
-        const apiBase = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
+        const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
         const res = await fetch(`${apiBase}/api/yatra/documents`);
         if (res.ok) {
           const docs = await res.json();

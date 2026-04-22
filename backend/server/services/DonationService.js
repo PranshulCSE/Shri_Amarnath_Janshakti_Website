@@ -160,6 +160,39 @@ class DonationService {
     }
 
     /**
+     * Reject a donation (Admin Only)
+     * SECURITY: Only updates status to rejected
+     * @param {String} id - Donation ID
+     * @param {String} adminId - Admin ID who is rejecting
+     * @param {String} reason - Reason for rejection
+     * @returns {Promise<Object>} Updated donation document
+     */
+    static async rejectDonation(id, adminId, reason = '') {
+        try {
+            const donation = await Donation.findById(id);
+            if (!donation) {
+                throw new Error('Donation not found');
+            }
+
+            if (donation.status === 'verified') {
+                throw new Error('Donation is already verified');
+            }
+
+            // Update status to rejected
+            donation.status = 'rejected';
+            donation.rejectedAt = new Date();
+            donation.rejectedBy = adminId;
+            donation.rejectionReason = reason;
+            donation.updatedAt = new Date();
+
+            await donation.save();
+            return donation;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
      * Get donation statistics
      * @returns {Promise<Object>} Statistics of all donations
      */

@@ -7,11 +7,13 @@ export default function DonationsPanel({ api, onUpdate }) {
   const [pages, setPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(null);
+  const [filterStatus, setFilterStatus] = useState('all'); // 'all', 'pending', 'verified', 'rejected'
 
   const load = async (p = 1) => {
     setLoading(true);
     try {
-      const res = await api(`/api/donations?page=${p}&limit=15`);
+      const statusQuery = filterStatus === 'all' ? '' : `&status=${filterStatus}`;
+      const res = await api(`/api/donations?page=${p}&limit=15${statusQuery}`);
       const data = await res.json();
       setDonations(data.data || []);
       setTotal(data.pagination?.total || 0);
@@ -21,24 +23,27 @@ export default function DonationsPanel({ api, onUpdate }) {
     setLoading(false);
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(1); }, [filterStatus]);
 
-  const updateStatus = async (id, status) => {
-    if (!window.confirm(`Are you sure you want to verify this donation?`)) return;
+  const updateStatus = async (id, action) => {
+    const actionText = action === 'verify' ? 'verify' : 'reject';
+    if (!window.confirm(`Are you sure you want to ${actionText} this donation?`)) return;
 
     try {
-      const res = await api(`/api/donations/${id}/verify`, {
+      const endpoint = action === 'verify' ? 'verify' : 'reject';
+      const body = action === 'verify'
+        ? { notes: '' }
+        : { reason: 'Rejected by admin' };
+
+      const res = await api(`/api/donations/${id}/${endpoint}`, {
         method: 'PUT',
-        body: JSON.stringify({ notes: '' })
+        body: JSON.stringify(body)
       });
 
-      if (!res.ok) throw new Error('Failed to verify donation');
+      if (!res.ok) throw new Error(`Failed to ${actionText} donation`);
 
       await load(page);
-
-      // 🔥 THIS LINE (IMPORTANT)
       if (onUpdate) onUpdate();
-
     } catch (err) {
       alert(err.message);
     }
@@ -49,6 +54,33 @@ export default function DonationsPanel({ api, onUpdate }) {
 
   return (
     <>
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
+        <button
+          className={`panel-btn ${filterStatus === 'all' ? 'primary' : ''}`}
+          onClick={() => setFilterStatus('all')}
+        >
+          All
+        </button>
+        <button
+          className={`panel-btn ${filterStatus === 'pending' ? 'primary' : ''}`}
+          onClick={() => setFilterStatus('pending')}
+        >
+          ⏳ Pending
+        </button>
+        <button
+          className={`panel-btn ${filterStatus === 'verified' ? 'primary' : ''}`}
+          onClick={() => setFilterStatus('verified')}
+        >
+          ✅ Verified
+        </button>
+        <button
+          className={`panel-btn ${filterStatus === 'rejected' ? 'primary' : ''}`}
+          onClick={() => setFilterStatus('rejected')}
+        >
+          ❌ Rejected
+        </button>
+      </div>
+
       <div className="panel-stat-grid" style={{ marginBottom: 16 }}>
         <div className="panel-stat-card">
           <span className="stat-icon">📈</span>
@@ -93,8 +125,11 @@ export default function DonationsPanel({ api, onUpdate }) {
                       <div style={{ display: 'flex', gap: '8px' }}>
                         {status === 'pending' && (
                           <>
-                            <button className="panel-btn primary" onClick={(e) => { e.stopPropagation(); updateStatus(d._id, 'verified'); }} title="Verify Payment">
-                              <i className="fas fa-check"></i>
+                            <button className="panel-btn primary" onClick={(e) => { e.stopPropagation(); updateStatus(d._id, 'verify'); }} title="Verify Payment">
+                              <i className="fas fa-check"></i> Verify
+                            </button>
+                            <button className="panel-btn" style={{ background: '#dc3545', border: 'none' }} onClick={(e) => { e.stopPropagation(); updateStatus(d._id, 'reject'); }} title="Reject Payment">
+                              <i className="fas fa-times"></i> Reject
                             </button>
                           </>
                         )}
@@ -121,6 +156,8 @@ export default function DonationsPanel({ api, onUpdate }) {
                               <div><strong>Amount:</strong> ₹{d.amount}</div>
                               <div><strong>Status:</strong> {d.status}</div>
                               {d.verifiedAt && <div><strong>Verified At:</strong> {new Date(d.verifiedAt).toLocaleString()}</div>}
+                              {d.rejectedAt && <div><strong>Rejected At:</strong> {new Date(d.rejectedAt).toLocaleString()}</div>}
+                              {d.rejectionReason && <div><strong>Rejection Reason:</strong> {d.rejectionReason}</div>}
                               {d.notes && <div><strong>Notes:</strong> {d.notes}</div>}
                             </div>
                           </div>

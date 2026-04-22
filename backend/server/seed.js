@@ -17,7 +17,7 @@ async function seed() {
     if (!existingAdmin) {
       const hash = await Admin.hashPassword('SAJSSM132001');
       await Admin.create({ username: 'Media-Coordinator', passwordHash: hash });
-      console.log('✅ Admin user created (Media-Coordinator / SAJSSM132001)');
+      console.log('✅ Admin user created');
     } else {
       console.log('ℹ️  Admin user already exists');
     }

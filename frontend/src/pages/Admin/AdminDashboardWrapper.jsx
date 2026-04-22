@@ -2,10 +2,16 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminDashboard from './AdminDashboard';
+import ErrorBoundary from '../../components/ErrorBoundary';
 
 export default function AdminDashboardWrapper() {
     const navigate = useNavigate();
-    const token = localStorage.getItem('adminToken');
+    let token = null;
+    try {
+        token = localStorage.getItem('adminToken');
+    } catch (err) {
+        console.error('Error accessing localStorage:', err);
+    }
 
     useEffect(() => {
         if (!token) {
@@ -14,7 +20,11 @@ export default function AdminDashboardWrapper() {
     }, [token, navigate]);
 
     const handleLogout = () => {
-        localStorage.removeItem('adminToken');
+        try {
+            localStorage.removeItem('adminToken');
+        } catch (err) {
+            console.error('Error clearing localStorage:', err);
+        }
         navigate('/admin/login', { replace: true });
     };
 
@@ -25,10 +35,12 @@ export default function AdminDashboardWrapper() {
     if (!token) return null; // ✅ Prevent rendering while redirecting
 
     return (
-        <AdminDashboard
-            token={token}
-            onLogout={handleLogout}
-            navigate={handleNavigate}
-        />
+        <ErrorBoundary>
+            <AdminDashboard
+                token={token}
+                onLogout={handleLogout}
+                navigate={handleNavigate}
+            />
+        </ErrorBoundary>
     );
 }

@@ -7,13 +7,51 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
-    if (!name || !email || !phone || !message) {
-      return res.status(400).json({ message: 'Name, email, phone and message are required' });
+
+    // Validate required fields
+    const missingFields = [];
+    if (!name) missingFields.push('name');
+    if (!email) missingFields.push('email');
+    if (!phone) missingFields.push('phone');
+    if (!message) missingFields.push('message');
+
+    if (missingFields.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `Missing required fields: ${missingFields.join(', ')}`
+      });
     }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid email format'
+      });
+    }
+
+    // Basic phone validation (10 digits)
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Phone number must be 10 digits'
+      });
+    }
+
     const contact = await Contact.create({ name, email, phone, subject, message });
-    res.status(201).json({ message: 'Message sent successfully', id: contact._id });
+    res.status(201).json({
+      success: true,
+      message: 'Message sent successfully',
+      id: contact._id
+    });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('❌ Error creating contact:', err.message);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to send message. Please try again.'
+    });
   }
 });
 
@@ -30,9 +68,22 @@ router.get('/', auth, async (req, res) => {
     ]);
 
     const unreadCount = await Contact.countDocuments({ isRead: false });
-    res.json({ contacts, total, unreadCount, page, pages: Math.ceil(total / limit) });
+    res.json({
+      success: true,
+      data: {
+        contacts,
+        total,
+        unreadCount,
+        page,
+        pages: Math.ceil(total / limit)
+      }
+    });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('❌ Error fetching contacts:', err.message);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch contacts'
+    });
   }
 });
 
@@ -40,10 +91,22 @@ router.get('/', auth, async (req, res) => {
 router.patch('/:id/read', auth, async (req, res) => {
   try {
     const contact = await Contact.findByIdAndUpdate(req.params.id, { isRead: true }, { new: true });
-    if (!contact) return res.status(404).json({ message: 'Not found' });
-    res.json(contact);
+    if (!contact) {
+      return res.status(404).json({
+        success: false,
+        message: 'Contact not found'
+      });
+    }
+    res.json({
+      success: true,
+      data: contact
+    });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('❌ Error updating contact:', err.message);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update contact'
+    });
   }
 });
 
@@ -51,10 +114,22 @@ router.patch('/:id/read', auth, async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
   try {
     const contact = await Contact.findByIdAndDelete(req.params.id);
-    if (!contact) return res.status(404).json({ message: 'Not found' });
-    res.json({ message: 'Deleted' });
+    if (!contact) {
+      return res.status(404).json({
+        success: false,
+        message: 'Contact not found'
+      });
+    }
+    res.json({
+      success: true,
+      message: 'Contact deleted successfully'
+    });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('❌ Error deleting contact:', err.message);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete contact'
+    });
   }
 });
 

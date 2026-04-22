@@ -39,7 +39,7 @@ const getDonationsSchema = Joi.object({
 
 // ================= MIDDLEWARE =================
 
-// CREATE VALIDATION (FIXED - NO ASYNC ❗)
+// CREATE VALIDATION 
 const validateCreateDonation = (req, res, next) => {
     try {
         if (req.body.amount && typeof req.body.amount === 'string') {

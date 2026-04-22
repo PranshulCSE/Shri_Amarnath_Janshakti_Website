@@ -16,7 +16,7 @@ export default function GalleryPage() {
   useEffect(() => {
     async function load() {
       try {
-        const apiBase = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
+        const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
         const res = await fetch(`${apiBase}/api/gallery`);
         if (res.ok) {
           const data = await res.json();

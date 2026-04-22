@@ -19,6 +19,17 @@ router.get('/', async (req, res) => {
     }
 });
 
+// GET /api/announcements/active — Public (active only - alternative route)
+router.get('/active', async (req, res) => {
+    try {
+        const announcements = await Announcement.find({ isActive: true })
+            .sort({ createdAt: -1 });
+        res.json({ success: true, data: announcements });
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Server error' });
+    }
+});
+
 // GET /api/announcements — Admin (all)
 router.get('/admin/all', auth, async (req, res) => {
     try {

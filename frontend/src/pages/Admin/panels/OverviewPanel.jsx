@@ -13,17 +13,20 @@ export default function OverviewPanel({ api, refreshKey }) {
           api('/api/donations/pending?limit=1'),
         ]);
 
-        const contacts = await cRes.json();
-        const donations = await dRes.json();
-        const pendingDonations = await dpRes.json();
+        const contactsResponse = await cRes.json();
+        const donationsResponse = await dRes.json();
+        const pendingDonationsResponse = await dpRes.json();
+
+        // Extract data from nested structure
+        const contactsData = contactsResponse.data || {};
+        const donationsData = donationsResponse.data || [];
+        const pendingDonationsData = pendingDonationsResponse.data || [];
 
         setStats({
-          totalContacts: contacts.total || 0,
-          unreadContacts: contacts.unreadCount || 0,
-
-          // ✅ FIX HERE (your backend uses "pagination.total")
-          totalDonations: donations.pagination?.total || 0,
-          unreadDonations: pendingDonations.pagination?.total || 0,
+          totalContacts: contactsData.total || 0,
+          unreadContacts: contactsData.unreadCount || 0,
+          totalDonations: donationsResponse.pagination?.total || 0,
+          unreadDonations: pendingDonationsResponse.pagination?.total || 0,
         });
       } catch (e) {
         console.error(e);

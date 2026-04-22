@@ -33,10 +33,34 @@ router.get('/admin/all', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
     try {
         const { title, description, documentUrl } = req.body;
+
+        // Input validation
+        if (!title || !documentUrl) {
+            return res.status(400).json({
+                success: false,
+                message: 'Title and document URL are required'
+            });
+        }
+
+        if (title.length > 200) {
+            return res.status(400).json({
+                success: false,
+                message: 'Title must be less than 200 characters'
+            });
+        }
+
+        if (description && description.length > 1000) {
+            return res.status(400).json({
+                success: false,
+                message: 'Description must be less than 1000 characters'
+            });
+        }
+
         const doc = await YatraDocument.create({ title, description, documentUrl });
         res.status(201).json({ success: true, data: doc });
     } catch (err) {
-        res.status(500).json({ success: false, message: 'Server error' });
+        console.error('Error creating yatra document:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to create yatra document' });
     }
 });
 

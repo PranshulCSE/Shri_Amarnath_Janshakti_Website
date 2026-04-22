@@ -33,10 +33,27 @@ router.get('/admin/all', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
     try {
         const { title, imageUrl, description, category } = req.body;
+
+        // Input validation
+        if (!title || !imageUrl) {
+            return res.status(400).json({
+                success: false,
+                message: 'Title and image URL are required'
+            });
+        }
+
+        if (title.length > 200) {
+            return res.status(400).json({
+                success: false,
+                message: 'Title must be less than 200 characters'
+            });
+        }
+
         const photo = await GalleryPhoto.create({ title, imageUrl, description, category });
         res.status(201).json({ success: true, data: photo });
     } catch (err) {
-        res.status(500).json({ success: false, message: 'Server error' });
+        console.error('Error creating gallery photo:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to create gallery photo' });
     }
 });
 

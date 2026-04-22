@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Ticker.css';
 
 const FALLBACK_MESSAGES = [
-  { icon: '📌', text: 'Inaugural date of Shri Amarnath Ji Yatra 2026 will be notified soon — Stay tuned!', speed: 50 },
+  { icon: '📌', text: 'Shri Amarnath Ji Yatra 2026 will Commence on 3rd July!!', speed: 50 },
   { icon: '📌', text: 'Registrations for Shri Amarnath Ji Yatra 2026 will start from 15 April !!', speed: 50 },
   { icon: '📌', text: 'Get Compulsory Health Certificate from Yatra Tab!!', speed: 50 },
   { icon: '📌', text: 'Jai Baba Barfani! Free Langar services for all pilgrims during Shri Amarnath Ji Yatra 2026', speed: 50 },
@@ -17,7 +17,7 @@ export default function Ticker() {
   useEffect(() => {
     async function load() {
       try {
-        const apiBase = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
+        const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
         const res = await fetch(`${apiBase}/api/ticker`);
         if (res.ok) {
           const data = await res.json();

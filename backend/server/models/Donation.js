@@ -54,8 +54,8 @@ const donationSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: {
-        values: ['pending', 'verified'],
-        message: 'Status must be either "pending" or "verified"',
+        values: ['pending', 'verified', 'rejected'],
+        message: 'Status must be either "pending", "verified", or "rejected"',
       },
       default: 'pending',
     },
@@ -71,6 +71,21 @@ const donationSchema = new mongoose.Schema(
       default: null,
     },
     notes: {
+      type: String,
+      default: '',
+    },
+
+    // Rejection Metadata
+    rejectedAt: {
+      type: Date,
+      default: null,
+    },
+    rejectedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Admin',
+      default: null,
+    },
+    rejectionReason: {
       type: String,
       default: '',
     },

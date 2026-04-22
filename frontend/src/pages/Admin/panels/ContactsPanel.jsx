@@ -12,7 +12,8 @@ export default function ContactsPanel({ api }) {
     setLoading(true);
     try {
       const res = await api(`/api/contacts?page=${p}&limit=15`);
-      const data = await res.json();
+      const response = await res.json();
+      const data = response.data || {};
       setContacts(data.contacts || []);
       setTotal(data.total || 0);
       setPages(data.pages || 1);

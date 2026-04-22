@@ -33,10 +33,34 @@ router.get('/admin/all', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
     try {
         const { text, order } = req.body;
-        const ticker = await Ticker.create({ text, order });
+
+        // Input validation
+        if (!text || text.trim().length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Ticker text is required'
+            });
+        }
+
+        if (text.length > 500) {
+            return res.status(400).json({
+                success: false,
+                message: 'Text must be less than 500 characters'
+            });
+        }
+
+        if (order !== undefined && isNaN(order)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Order must be a number'
+            });
+        }
+
+        const ticker = await Ticker.create({ text: text.trim(), order });
         res.status(201).json({ success: true, data: ticker });
     } catch (err) {
-        res.status(500).json({ success: false, message: 'Server error' });
+        console.error('Error creating ticker:', err.message);
+        res.status(500).json({ success: false, message: 'Failed to create ticker' });
     }
 });
 

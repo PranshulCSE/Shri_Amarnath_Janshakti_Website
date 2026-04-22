@@ -43,7 +43,7 @@ export default function Footer() {
           <p>📞 9466132732, 9466132733</p>
           <p>📞 7015345275, 9896362883</p>
           <p>✉️ shriamarnathjanshakti@gmail.com</p>
-          <p className="footer-notice">🔔 Yatra 2026 date — Coming Soon!</p>
+          <p className="footer-notice">🔔 Yatra 2026 will Commence on 3rd July</p>
         </div>
       </div>
 

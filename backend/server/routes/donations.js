@@ -3,15 +3,24 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const rateLimit = require('express-rate-limit');
 
 const DonationController = require('../controllers/DonationController');
 const {
   validateCreateDonation,
   validateVerifyDonation,
   validateGetDonations,
-} = require('../validations/DonationValidator'); // ✅ correct import
+} = require('../validations/DonationValidator');
 
 const auth = require('../middleware/auth');
+
+// ✅ Rate limiting for donations
+const donationLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10, // 10 donations per hour
+  message: 'Too many donation attempts, please try again later',
+  skipSuccessfulRequests: true,
+});
 
 // ================= MULTER CONFIG =================
 const uploadDir = path.join(__dirname, '../uploads/donation-screenshots');
@@ -83,6 +92,7 @@ router.get('/by-phone/:phone', auth, DonationController.getDonationsByPhone);
 // ✅ CREATE DONATION (FIXED)
 router.post(
   '/',
+  donationLimiter,
   (req, res, next) => {
     upload.single('screenshot')(req, res, function (err) {
       if (err) {
@@ -115,6 +125,13 @@ router.put(
   auth,
   validateVerifyDonation,
   DonationController.verifyDonation
+);
+
+// REJECT
+router.put(
+  '/:id/reject',
+  auth,
+  DonationController.rejectDonation
 );
 
 module.exports = router;
