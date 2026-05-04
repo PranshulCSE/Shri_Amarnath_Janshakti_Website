@@ -24,7 +24,7 @@ export default function AboutPage() {
         </div>
         <div className="hero-img-box">
           <img
-            src="/Images/Yatra2.jpg"
+            src="/Images/Visiting_SAJSSM.jpg"
             alt="Amarnath Yatra"
             onError={(e) => {
               e.target.style.display = 'none';

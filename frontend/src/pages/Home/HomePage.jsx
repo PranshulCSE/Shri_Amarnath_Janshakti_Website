@@ -41,7 +41,7 @@ export default function HomePage() {
         </div>
         <div className="hero-img-box">
           <img
-            src="/Images/Visiting_SAJSSM.jpg"
+            src="/Images/Banner2026.png"
             alt="SAJSSM Yatra"
           />
         </div>
