@@ -1,34 +1,34 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
+import { T } from '../../constants/translations';
 import './Footer.css';
 
 export default function Footer() {
   const navigate = useNavigate();
   const year = new Date().getFullYear();
+  const { language } = useLanguage();
+  const t = T[language];
 
   return (
     <footer className="footer">
       <div className="footer-grid">
         <div>
-          <h4>About SAJSSM</h4>
-          <p>
-            Shri Amarnath JanShakti Sewa Mandal is dedicated to serving
-            pilgrims with free langar services during their sacred yatra of
-            Baba Barfani Ji.
-          </p>
-          <p className="footer-tagline">"सेवा ही धर्म है"</p>
+          <h4>{t.about_sajssm}</h4>
+          <p>{t.footer_about_text}</p>
+          <p className="footer-tagline">{t.seva_tagline}</p>
         </div>
 
         <div>
-          <h4>Quick Links</h4>
+          <h4>{t.quick_links}</h4>
           <ul>
             {[
-              ['home',     '🏠 Home'],
-              ['about',    '🙏 About Us'],
-              ['yatra',    '🏔️ Yatra Info'],
-              ['donation', '💰 Donations'],
-              ['gallery',  '📸 Gallery'],
-              ['contact',  '📞 Contact'],
+              ['home',     `🏠 ${t.nav_home}`],
+              ['about',    `🙏 ${t.nav_about}`],
+              ['yatra',    `🏔️ ${t.nav_yatra}`],
+              ['donation', `💰 ${t.nav_donation}`],
+              ['gallery',  `📸 ${t.nav_gallery}`],
+              ['contact',  `📞 ${t.nav_contact}`],
             ].map(([id, label]) => (
               <li key={id}>
                 <button onClick={() => navigate(id === 'home' ? '/' : `/${id}`)}>{label}</button>
@@ -38,23 +38,22 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4>Contact Info</h4>
-          <p>📍 H.No. 186/5 Gandhi Nagar, Karnal, Haryana 132001</p>
+          <h4>{t.contact_info}</h4>
+          <p>📍 {t.contact_address_val}</p>
           <p>📞 9466132732, 9466132733</p>
           <p>📞 7015345275, 9896362883</p>
           <p>✉️ shriamarnathjanshakti@gmail.com</p>
-          <p className="footer-notice">🔔 Yatra 2026 will Commence on 3rd July</p>
+          <p className="footer-notice">{t.yatra_notice}</p>
         </div>
       </div>
 
       <div className="footer-bottom">
-        &copy; {year} Shri Amarnath JanShakti Sewa Mandal — All rights
-        reserved. | 🙏 Jai Baba Barfani |{' '}
+        &copy; {year} {t.rights_reserved} | 🙏 Jai Baba Barfani |{' '}
         <button
           onClick={() => navigate('/admin/login')}
           style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', fontSize: '0.75rem', textDecoration: 'underline' }}
         >
-          Admin
+          {t.admin}
         </button>
       </div>
     </footer>

@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import './Header.css';
 
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
+import { T } from '../../constants/translations';
 
 const NAV_ITEMS = [
-  { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About' },
-  { id: 'history', label: 'History' },
-  { id: 'yatra', label: 'Yatra' },
-  { id: 'donation', label: 'Donations' },
-  { id: 'gallery', label: 'Gallery' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'home', labelKey: 'nav_home' },
+  { id: 'about', labelKey: 'nav_about' },
+  { id: 'history', labelKey: 'nav_history' },
+  { id: 'yatra', labelKey: 'nav_yatra' },
+  { id: 'donation', labelKey: 'nav_donation' },
+  { id: 'gallery', labelKey: 'nav_gallery' },
+  { id: 'contact', labelKey: 'nav_contact' },
 ];
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { language } = useLanguage();
+  const t = T[language];
 
   const handleNav = (id) => {
     navigate(id === 'home' ? '/' : `/${id}`);
@@ -36,8 +40,8 @@ export default function Header() {
               className="logo"
             />
           </div>
-          <h1 className="site-title">SHRI AMARNATH JANSHAKTI SEWA MANDAL</h1>
-          <p className="reg-line">REG.01104 | H.No. 186/5 Gandhi Nagar, Karnal Hry. (132001)</p>
+          <h1 className="site-title">{t.site_title}</h1>
+          <p className="reg-line">{t.reg_line}</p>
           <p className="con-line">📞 9466132732 | 9466132733 | 7015345275 | 9896362883</p>
         </div>
 
@@ -59,7 +63,7 @@ export default function Header() {
                 className={`nav-btn ${location.pathname === (n.id === 'home' ? '/' : `/${n.id}`) ? 'active' : ''}`}
                 onClick={() => handleNav(n.id)}
               >
-                {n.label}
+                {t[n.labelKey]}
               </button>
             </li>
           ))}

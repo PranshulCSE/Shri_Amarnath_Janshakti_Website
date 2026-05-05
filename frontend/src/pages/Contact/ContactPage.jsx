@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
+import { T } from '../../constants/translations';
 import SocialSection from '../../components/common/SocialSection';
 import './ContactPage.css';
-
-const CONTACT_INFO = [
-  { icon: '📞', title: 'फोन नंबर',  content: <>9466132732<br />9466132733<br />7015345275<br />9896362883</> },
-  { icon: '📧', title: 'ईमेल',      content: <a href="mailto:shriamarnathjanshakti@gmail.com">shriamarnathjanshakti@gmail.com</a> },
-  { icon: '📍', title: 'पता',       content: <>H.No. 186/5, गांधी नगर<br />करनाल, हरियाणा (132001)<br />भारत</> },
-];
 
 const INIT = { name: '', email: '', phone: '', subject: '', message: '' };
 
 export default function ContactPage() {
+  const { language } = useLanguage();
+  const t = T[language];
+
+  const CONTACT_INFO = [
+    { icon: '📞', title: t.contact_phone,  content: <>9466132732<br />9466132733<br />7015345275<br />9896362883</> },
+    { icon: '📧', title: t.contact_email,      content: <a href="mailto:shriamarnathjanshakti@gmail.com">shriamarnathjanshakti@gmail.com</a> },
+    { icon: '📍', title: t.contact_address,       content: <span dangerouslySetInnerHTML={{ __html: t.contact_address_val }} /> },
+  ];
+
   const [form, setForm]        = useState(INIT);
   const [submitted, setSubmit] = useState(false);
   const [loading, setLoading]  = useState(false);
@@ -69,12 +74,9 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="hero">
         <div>
-          <h2 className="hero-title">हमसे संपर्क करें</h2>
-          <p className="hero-sub">हमारी टीम आपकी सेवा के लिए हमेशा तैयार है</p>
-          <p className="hero-desc">
-            किसी भी सवाल, सुझाव या सेवा के लिए हमसे संपर्क करें — हम जल्द ही
-            आपसे संपर्क करेंगे।
-          </p>
+          <h2 className="hero-title">{t.contact_us}</h2>
+          <p className="hero-sub">{t.contact_sub}</p>
+          <p className="hero-desc">{t.contact_hero_desc}</p>
         </div>
         <div className="hero-img-box">
           <img
@@ -90,7 +92,7 @@ export default function ContactPage() {
 
       {/* Contact Info Cards */}
       <section className="section">
-        <h2 className="section-title">संपर्क जानकारी</h2>
+        <h2 className="section-title">{t.contact_info_title}</h2>
         <div className="contact-info-grid">
           {CONTACT_INFO.map((c) => (
             <div className="info-card" key={c.title}>
@@ -104,15 +106,13 @@ export default function ContactPage() {
 
       {/* Contact Form */}
       <section className="cta-section">
-        <h2>हमें एक संदेश भेजें</h2>
-        <p>
-          कृपया नीचे दिए गए फॉर्म को भरें और हम जल्द ही आपसे संपर्क करेंगे
-        </p>
+        <h2>{t.send_msg}</h2>
+        <p>{t.send_msg_sub}</p>
         <div className="form-wrap contact-form-inner">
           {submitted && (
             <div className="success-msg">
               <i className="fas fa-check-circle" />
-              धन्यवाद! आपका संदेश सफलतापूर्वक भेजा गया। 🙏
+              {t.msg_success}
             </div>
           )}
           {error && (
@@ -123,25 +123,25 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
-                <input name="name"    type="text"  placeholder="आपका नाम *"            required value={form.name}    onChange={change} />
+                <input name="name"    type="text"  placeholder={t.form_name} required value={form.name}    onChange={change} />
               </div>
               <div className="form-group">
-                <input name="email"   type="email" placeholder="आपका ईमेल *"            required value={form.email}   onChange={change} />
+                <input name="email"   type="email" placeholder={t.form_email} required value={form.email}   onChange={change} />
               </div>
             </div>
             <div className="form-row">
               <div className="form-group">
-                <input name="phone"   type="tel"   placeholder="आपका फोन नंबर *"        required value={form.phone}   onChange={change} />
+                <input name="phone"   type="tel"   placeholder={t.form_phone} required value={form.phone}   onChange={change} />
               </div>
               <div className="form-group">
-                <input name="subject" type="text"  placeholder="विषय (वैकल्पिक)"                  value={form.subject} onChange={change} />
+                <input name="subject" type="text"  placeholder={t.form_subject} value={form.subject} onChange={change} />
               </div>
             </div>
             <div className="form-group">
-              <textarea name="message" placeholder="आपका संदेश *" rows={5} required value={form.message} onChange={change} />
+              <textarea name="message" placeholder={t.form_msg} rows={5} required value={form.message} onChange={change} />
             </div>
             <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
-              {loading ? 'भेज रहे हैं...' : 'संदेश भेजें'}
+              {loading ? t.form_sending : t.form_send}
             </button>
           </form>
         </div>

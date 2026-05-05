@@ -1,24 +1,29 @@
 import React, { useState, useRef } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
+import { T } from '../../constants/translations';
 import SocialSection from '../../components/common/SocialSection';
 import './DonationPage.css';
 
-const WHAT_TO_DONATE = [
-  { icon: '🍚', title: 'राशन सामग्री',         desc: 'आटा, चावल, दालें, चीनी, रिफाइंड तेल, देसी घी, मसाले, सूखा दूध पाउडर, ड्राई फ्रूट्स।' },
-  { icon: '🧥', title: 'कंबल एवं गर्म कपड़े',  desc: 'कंबल, गर्म जैकेट, स्वेटर, ऊनी कपड़े, दस्ताने, मोज़े और टोपी।' },
-  { icon: '🥾', title: 'जूते एवं अन्य वस्तुएँ', desc: 'मजबूत जूते, चप्पल, रेनकोट, रेन कवर और अन्य दैनिक उपयोग की वस्तुएँ।' },
-  { icon: '💰', title: 'आर्थिक सहयोग',          desc: 'आपका योगदान सीधे राशन, चिकित्सा सहायता और सेवा व्यवस्थाओं में उपयोग किया जाता है।' },
-];
-
-const DIGITAL = [
-  { icon: '📱', title: 'UPI ट्रांसफर', desc: <><strong>UPI ID:</strong> 9466132732@ibl<br />किसी भी UPI ऐप से तुरंत भुगतान करें</> },
-  { icon: '💳', title: 'Google Pay',   desc: <><strong>नंबर:</strong> 9466132732<br />Google Pay ऐप के जरिए दान करें</> },
-  { icon: '🏧', title: 'चेक द्वारा',  desc: <>संस्था के नाम से चेक भेजें<br />H.No. 186/5, गांधी नगर, करनाल</> },
-  { icon: '🎁', title: 'सीधे दान',    desc: <>हमारे कार्यालय में व्यक्तिगत रूप से दान दें<br />📞 9466132732</> },
-];
-
-const INIT = { name: '', email: '', phone: '', amount: '', message: '', transactionId: '' };
-
 export default function DonationPage() {
+  const { language } = useLanguage();
+  const t = T[language];
+
+  const WHAT_TO_DONATE = [
+    { icon: '🍚', title: t.donate_ration,         desc: t.donate_ration_desc },
+    { icon: '🧥', title: t.donate_clothes,  desc: t.donate_clothes_desc },
+    { icon: '🥾', title: t.donate_shoes, desc: t.donate_shoes_desc },
+    { icon: '💰', title: t.donate_money,          desc: t.donate_money_desc },
+  ];
+
+  const DIGITAL = [
+    { icon: '📱', title: 'UPI Transfer', desc: <span dangerouslySetInnerHTML={{ __html: t.upi_desc }} /> },
+    { icon: '💳', title: 'Google Pay',   desc: <span dangerouslySetInnerHTML={{ __html: t.gpay_desc }} /> },
+    { icon: '🏧', title: t.by_cheque,  desc: <span dangerouslySetInnerHTML={{ __html: t.cheque_desc }} /> },
+    { icon: '🎁', title: t.direct_donation,    desc: <span dangerouslySetInnerHTML={{ __html: t.direct_desc }} /> },
+  ];
+
+  const INIT = { name: '', email: '', phone: '', amount: '', message: '', transactionId: '' };
+
   const [form, setForm]        = useState(INIT);
   const [screenshot, setScreenshot] = useState(null);
   const [preview, setPreview]  = useState(null);
@@ -98,14 +103,13 @@ export default function DonationPage() {
       {/* Hero */}
       <section className="hero">
         <div>
-          <h2 className="hero-title">आपका सहयोग – हमारी शक्ति</h2>
-          <p className="hero-sub">यात्रियों की सहायता के लिए आपका योगदान</p>
+          <h2 className="hero-title">{t.donation_title}</h2>
+          <p className="hero-sub">{t.donation_sub}</p>
           <p className="hero-desc">
-            आपका छोटा-सा योगदान भी श्री अमरनाथ जी यात्रियों की सेवा में बड़ा परिवर्तन ला सकता है। 
-            आपके दान से हम निःशुल्क लंगर सेवा और आवश्यक सुविधाएँ निरंतर प्रदान कर पाते हैं।
+            {t.donation_hero_desc}
           </p>
           <a href="#donation-methods" className="btn btn-primary">
-            अभी दान करें
+            {t.donate_now_btn}
           </a>
         </div>
         <div className="hero-img-box">
@@ -122,7 +126,7 @@ export default function DonationPage() {
 
       {/* What to Donate */}
       <section className="section">
-        <h2 className="section-title">आप क्या दान कर सकते हैं</h2>
+        <h2 className="section-title">{t.what_to_donate}</h2>
         <div className="cards-grid">
           {WHAT_TO_DONATE.map((d) => (
             <div className="card" key={d.title}>
@@ -136,8 +140,8 @@ export default function DonationPage() {
 
       {/* UPI Section */}
       <section className="cta-section" id="donation-methods">
-        <h2>QR कोड स्कैन करके दान करें</h2>
-        <p>नीचे दिए गए QR कोड को स्कैन करके तुरंत दान कर सकते हैं</p>
+        <h2>{t.scan_qr_title}</h2>
+        <p>{t.scan_qr_sub}</p>
         
         <div className="upi-box">
           <div className="qr-wrapper">
@@ -167,12 +171,12 @@ export default function DonationPage() {
       <section className="section">
         <div className="donation-methods-grid">
           <div className="bank-card">
-            <h3>🏦 Bank Transfer Details</h3>
+            <h3>🏦 {t.bank_transfer_title}</h3>
             <div className="bank-details">
-              <p><span>Account Name</span> SHRI AMARNATH JANSHAKTI SEWA MANDAL</p>
-              <p><span>Bank Name</span> HDFC BANK</p>
-              <p><span>Account No.</span> 50200109501402</p>
-              <p><span>IFSC Code</span> HDFC0003989</p>
+              <p><span>{t.account_name}</span> SHRI AMARNATH JANSHAKTI SEWA MANDAL</p>
+              <p><span>{t.bank_name}</span> HDFC BANK</p>
+              <p><span>{t.account_no}</span> 50200109501402</p>
+              <p><span>{t.ifsc_code}</span> HDFC0003989</p>
             </div>
           </div>
           
@@ -192,16 +196,16 @@ export default function DonationPage() {
 
       {/* Form Section */}
       <section className="section don-form-section" id="donation-form">
-        <h2 className="section-title">दान विवरण दर्ज करें</h2>
-        <p style={{textAlign: 'center', marginBottom: 30, color: 'rgba(255,255,255,0.7)'}}>दान करने के पश्चात कृपया स्क्रीनशॉट के साथ नीचे दिया गया प्रपत्र भरें।</p>
+        <h2 className="section-title">{t.enter_donation_details}</h2>
+        <p style={{textAlign: 'center', marginBottom: 30, color: 'rgba(255,255,255,0.7)'}}>{t.form_note}</p>
         
         <div className="form-wrap donation-form-wrap">
           {submitted && (
             <div className="success-msg">
               <i className="fas fa-check-circle" />
               <div>
-                <strong>धन्यवाद!</strong>
-                <p>आपका दान प्रपत्र सफलतापूर्वक प्राप्त हुआ। हम शीघ्र ही इसकी पुष्टि करेंगे। 🙏</p>
+                <strong>{t.thank_you}</strong>
+                <p>{t.donation_success}</p>
               </div>
             </div>
           )}
@@ -215,34 +219,34 @@ export default function DonationPage() {
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
-                <label>आपका नाम *</label>
+                <label>{t.form_name} *</label>
                 <input name="name" type="text" placeholder="e.g. Rahul Kumar" required value={form.name} onChange={change} />
               </div>
               <div className="form-group">
-                <label>ईमेल *</label>
+                <label>{t.form_email} *</label>
                 <input name="email" type="email" placeholder="e.g. rahul@example.com" required value={form.email} onChange={change} />
               </div>
             </div>
             
             <div className="form-row">
               <div className="form-group">
-                <label>फोन नंबर *</label>
+                <label>{t.form_phone} *</label>
                 <input name="phone" type="tel" placeholder="10-digit mobile number" required value={form.phone} onChange={change} />
               </div>
               <div className="form-group">
-                <label>दान की राशि (₹) *</label>
+                <label>{t.form_amount} *</label>
                 <input name="amount" type="number" min="100" placeholder="Minimum ₹100" required value={form.amount} onChange={change} />
               </div>
             </div>
 
             <div className="form-group">
-              <label>ट्रांजैक्शन आईडी / UTR नंबर *</label>
+              <label>{t.form_utr} *</label>
               <input name="transactionId" type="text" placeholder="12-digit UTR Number" required value={form.transactionId} onChange={change} />
-              <p className="field-hint">पेमेंट के बाद प्राप्त होने वाला 12-अंकों का UTR नंबर यहाँ दर्ज करें।</p>
+              <p className="field-hint">{t.utr_hint}</p>
             </div>
             
             <div className="form-group">
-              <label>पेमेंट का स्क्रीनशॉट * <span className="file-hint">(Max 2MB, JPG/PNG)</span></label>
+              <label>{t.form_screenshot} * <span className="file-hint">(Max 2MB, JPG/PNG)</span></label>
               <div className="file-upload-box">
                 <input type="file" ref={fileRef} accept="image/jpeg, image/png" required onChange={handleFile} id="screenshot-upload" />
                 <label htmlFor="screenshot-upload" className="file-upload-label">
@@ -261,7 +265,7 @@ export default function DonationPage() {
             </div>
             
             <div className="form-group">
-              <label>आपका संदेश (वैकल्पिक)</label>
+              <label>{t.form_msg}</label>
               <textarea name="message" placeholder="Optional message..." rows={3} value={form.message} onChange={change} />
             </div>
             
@@ -269,7 +273,7 @@ export default function DonationPage() {
               {loading ? (
                 <><i className="fas fa-spinner fa-spin"></i> Details Sending...</>
               ) : (
-                <><i className="fas fa-paper-plane"></i> Submit Details</>
+                <><i className="fas fa-paper-plane"></i> {t.form_submit_details}</>
               )}
             </button>
           </form>

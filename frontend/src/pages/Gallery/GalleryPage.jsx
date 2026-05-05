@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
+import { T } from '../../constants/translations';
 import SocialSection from '../../components/common/SocialSection';
 import './GalleryPage.css';
 
-const FALLBACK_ITEMS = [
-  { _id: 'f1', src: '/Images/Governer.jpeg', alt: 'प्रशंसा पत्र', title: 'प्रशंसा पत्र', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के सेक्रेटरी बृज-मोहन पुरी जी को प्रशंसा पत्र देते उपराज्यपाल श्री मनोज सिन्हा जी।', fallback: '🎖️' },
-  { _id: 'f2', src: '/Images/Kanhaiya-Mittal.jpeg', alt: 'कन्हैया मित्तल', title: 'कन्हैया मित्तल जी', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के सदस्य श्री मान कन्हैया मित्तल जी को बाबा बर्फानी जी का प्रसाद देते हुए।', fallback: '🙏' },
-  { _id: 'f3', src: '/Images/Base Camp.jpeg', alt: 'बेस कैम्प', title: 'बालटाल स्थित बेस कैम्प', description: 'बाबा अमरनाथ बर्फानी जी के श्री चरणों में स्थित श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के बेस कैम्प के दर्शन।', fallback: '⛺' },
-  { _id: 'f4', src: '/Images/Domail-Langar.jpg', alt: 'लंगर ', title: 'दोमेल , बालटाल  लंगर सेवा 2024', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के साल 2024 के लंगर के दर्शन ', fallback: '🍲' },
-  { _id: 'f5', src: '/Images/Member.jpg', alt: 'सदस्य', title: 'श्री अमरनाथ जनशक्ति सेवा मण्डल के सभी सदस्य  ', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के सभी सदस्य एक शाम भोले बाबा जी के नाम मे ', fallback: '🍲' },
-  { _id: 'f6', src: '/Images/Krishna-Mandir.jpg', alt: 'सदस्य ', title: 'आस्था  ', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के सभी सदस्य प्रत्येक वर्ष आयोजित होने वाली माता रानी जी की चोंकी मे माथा टेकते हुए।  ', fallback: '🎖️' },
-  { _id: 'f7', src: '/Images/Domail-Mandir.jpg', alt: 'मंदिर ', title: 'दोमेल लंगर स्थित मंदिर के दर्शन ', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के दोमेल लंगर स्थित मंदिर के दर्शन ।', fallback: '🙏' },
-  { _id: 'f8', src: '/Images/Medical.jpg', alt: 'बेस कैम्प', title: 'दोमेल स्थित लंगर मे फ्री मेडिकल कैम्प', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के लंगर मे 24 घंटे फ्री मेडिकल सेवा के दर्शन।', fallback: '⛺' },
-  { _id: 'f9', src: '/Images/Brari-Officers.jpeg', alt: 'बराड़ी मार्ग', title: 'बराड़ी मार्ग लंगर सेवा 2025', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के सेवादार बराड़ी मार्ग पर लंगर समापन के पश्चात सभी अधिकारियों से विदा लेते हुए।', fallback: '🍲' },
-  { _id: 'f10', src: '/Images/Aligarh.jpg', alt: 'शाखाएं ', title: 'अलीगढ़ शाखा के सदस्य  ', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के सदस्य अलीगढ़ शाखा के साथ ', fallback: '🍲' },
-  { _id: 'f11', src: '/Images/Domail-Mandir3.jpg ', alt: 'लंगर', title: 'लंगर मे स्थित भोले बाबा जी के सुंदर स्वरूप के दर्शन', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के लंगर स्थित सुंदर स्वरूप के दर्शन ', fallback: '🍲' },
-  { _id: 'f12', src: '/Images/Domail-Langar2.jpg', alt: 'लंगर', title: 'दोमेल , बालटाल  लंगर सेवा 2024 ', description: 'श्री अमरनाथ जनशक्ति सेवा मण्डल, करनाल के लंगर के रात्रि सेवा दर्शन ', fallback: '🍲' },
-];
-
 export default function GalleryPage() {
+  const { language } = useLanguage();
+  const t = T[language];
+
+  const FALLBACK_ITEMS = [
+    { _id: 'f1', src: '/Images/Governer.jpeg', alt: 'प्रशंसा पत्र', title: t.gal_1_title, description: t.gal_1_desc, fallback: '🎖️' },
+    { _id: 'f2', src: '/Images/Kanhaiya-Mittal.jpeg', alt: 'कन्हैया मित्तल', title: t.gal_2_title, description: t.gal_2_desc, fallback: '🙏' },
+    { _id: 'f3', src: '/Images/Base Camp.jpeg', alt: 'बेस कैम्प', title: t.gal_3_title, description: t.gal_3_desc, fallback: '⛺' },
+    { _id: 'f4', src: '/Images/Domail-Langar.jpg', alt: 'लंगर ', title: t.gal_4_title, description: t.gal_4_desc, fallback: '🍲' },
+    { _id: 'f5', src: '/Images/Member.jpg', alt: 'सदस्य', title: t.gal_5_title, description: t.gal_5_desc, fallback: '🍲' },
+    { _id: 'f6', src: '/Images/Krishna-Mandir.jpg', alt: 'सदस्य ', title: t.gal_6_title, description: t.gal_6_desc, fallback: '🎖️' },
+    { _id: 'f7', src: '/Images/Domail-Mandir.jpg', alt: 'मंदिर ', title: t.gal_7_title, description: t.gal_7_desc, fallback: '🙏' },
+    { _id: 'f8', src: '/Images/Medical.jpg', alt: 'बेस कैम्प', title: t.gal_8_title, description: t.gal_8_desc, fallback: '⛺' },
+    { _id: 'f9', src: '/Images/Brari-Officers.jpeg', alt: 'बराड़ी मार्ग', title: t.gal_9_title, description: t.gal_9_desc, fallback: '🍲' },
+    { _id: 'f10', src: '/Images/Aligarh.jpg', alt: 'शाखाएं ', title: t.gal_10_title, description: t.gal_10_desc, fallback: '🍲' },
+    { _id: 'f11', src: '/Images/Domail-Mandir3.jpg ', alt: 'लंगर', title: t.gal_11_title, description: t.gal_11_desc, fallback: '🍲' },
+    { _id: 'f12', src: '/Images/Domail-Langar2.jpg', alt: 'लंगर', title: t.gal_12_title, description: t.gal_12_desc, fallback: '🍲' },
+  ];
+
   const [items, setItems] = useState(FALLBACK_ITEMS);
 
   useEffect(() => {
@@ -52,10 +57,10 @@ export default function GalleryPage() {
       {/* Hero */}
       <section className="hero">
         <div>
-          <h2 className="hero-title">हमारी गैलरी</h2>
-          <p className="hero-sub">सेवा के क्षणों को देखें</p>
+          <h2 className="hero-title">{t.our_gallery}</h2>
+          <p className="hero-sub">{t.moments_of_seva}</p>
           <p className="hero-desc">
-            पवित्र यात्रा में हमारी सेवा के अनमोल पल — हर तस्वीर एक कहानी कहती है।
+            {t.gallery_hero_desc}
           </p>
         </div>
         <div className="hero-img-box">
@@ -72,7 +77,7 @@ export default function GalleryPage() {
 
       {/* Gallery Grid */}
       <section className="section">
-        <h2 className="section-title">सेवा के पल</h2>
+        <h2 className="section-title">{t.moments}</h2>
         <div className="modern-gallery-grid">
           {items.map((item) => (
             <div className="modern-gallery-card" key={item._id}>
@@ -102,7 +107,7 @@ export default function GalleryPage() {
 
       {/* More Link */}
       <section className="section gallery-more">
-        <h2 className="section-title">और देखें</h2>
+        <h2 className="section-title">{t.see_more}</h2>
         <div className="gallery-more-btn">
           <a
             href="https://drive.google.com/drive/folders/1H3uPef6Vf-LqKUwc7g1i3uVjCtNQuxwm?usp=sharing"
@@ -111,12 +116,12 @@ export default function GalleryPage() {
             rel="noreferrer"
           >
             <i className="fas fa-images" style={{ marginRight: 8 }} />
-            Click here to see More Photos
+            {t.more_photos_btn}
           </a>
         </div>
       </section>
 
-      <SocialSection />
+      <SocialSection heading={t.social_heading} />
     </>
   );
 }

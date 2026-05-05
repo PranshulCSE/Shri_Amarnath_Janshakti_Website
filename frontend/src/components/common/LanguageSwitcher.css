@@ -1,0 +1,79 @@
+.lang-switcher-container {
+  position: fixed;
+  bottom: 28px;
+  right: 88px; /* positioned next to scroll to top */
+  z-index: 800;
+  display: flex;
+  align-items: center;
+}
+
+.lang-switcher-btn {
+  background: white;
+  border: none;
+  border-radius: 30px;
+  padding: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s;
+}
+
+.lang-switcher-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.lang-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 68px;
+  height: 34px;
+  background: #f0f0f0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.lang-indicator {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 2px 5px rgba(255, 107, 53, 0.5);
+}
+
+.en-active .lang-indicator {
+  transform: translateX(34px);
+}
+
+.lang-label {
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 1;
+  color: #666;
+  transition: color 0.3s;
+  pointer-events: none;
+  line-height: 34px;
+}
+
+.lang-label.active {
+  color: white;
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  .lang-switcher-container {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  /* If scroll-to-top is present, we might want to stack them or adjust position */
+  .scroll-top-btn.show ~ .lang-switcher-container {
+    right: 80px;
+  }
+}

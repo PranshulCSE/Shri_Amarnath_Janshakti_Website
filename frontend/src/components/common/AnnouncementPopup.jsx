@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import './AnnouncementPopup.css';
 
 export default function AnnouncementPopup() {
+  const { language } = useLanguage();
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
   const [announcement, setAnnouncement] = useState(null);
@@ -67,10 +69,10 @@ export default function AnnouncementPopup() {
 
           <div className="popup-btns">
             <button className="popup-btn-primary" onClick={close}>
-              🙏 Jai Baba Barfani
+              {language === 'hi' ? '🙏 जय बाबा बर्फानी' : '🙏 Jai Baba Barfani'}
             </button>
             <button className="popup-btn-secondary" onClick={close}>
-              Dismiss
+              {language === 'hi' ? 'बंद करें' : 'Dismiss'}
             </button>
           </div>
         </div>

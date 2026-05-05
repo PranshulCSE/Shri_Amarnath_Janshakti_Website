@@ -1,41 +1,42 @@
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
+import { T } from '../../constants/translations';
 import SocialSection from '../../components/common/SocialSection';
 import './HomePage.css';
 
-const SERVICES = [
-  { icon: '🍲', title: 'Free Langar Services', desc: 'Providing nutritious meals to all pilgrims during their sacred journey to Amarnath Ji — completely free of cost.' },
-  { icon: '🏥', title: 'Medical Support',       desc: 'Basic medicines and first-aid are available for pilgrims at our camps throughout the yatra route.' },
-  { icon: '🛡️', title: 'Safety & Guidance',    desc: 'Our volunteers provide guidance and safety support to ensure a secure and smooth pilgrimage experience.' },
-  { icon: '❤️', title: 'Community Service',     desc: 'Dedicated selfless volunteers work tirelessly to serve pilgrims — elderly, women, and differently-abled get special care.' },
-];
-
-const STATS = [
-  { value: '2008',   label: 'Serving Since' },
-  { value: '17+',    label: 'Years of Service' },
-  { value: 'Lakhs of',  label: 'Pilgrims Served' },
-  { value: 'Langar ',   label: 'Free Service' },
-];
-
 export default function HomePage() {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const t = T[language];
+  
+  const SERVICES = [
+    { icon: '🍲', title: t.service_langar, desc: t.service_langar_desc },
+    { icon: '🏥', title: t.service_medical, desc: t.service_medical_desc },
+    { icon: '🛡️', title: t.service_safety, desc: t.service_safety_desc },
+    { icon: '❤️', title: t.service_community, desc: t.service_community_desc },
+  ];
+
+  const STATS = [
+    { value: '2008',   label: t.stats_serving },
+    { value: '17+',    label: t.stats_years },
+    { value: 'Lakhs of',  label: t.stats_pilgrims },
+    { value: 'Langar ',   label: t.stats_free },
+  ];
+
   return (
     <>
       {/* Hero */}
       <section className="hero">
         <div>
-          <h2 className="hero-title">🙏 Welcome to SAJSSM 🙏</h2>
-          <p className="hero-sub">Serving Pilgrims with Love &amp; Compassion</p>
-          <p className="hero-desc">
-            Providing free Langar services to Shri Amarnath Ji Yatris since 2011.
-            Dedicated volunteers ensure every pilgrim's journey is safe, nourished,
-            and spiritually uplifting.
-          </p>
+          <h2 className="hero-title">{t.welcome}</h2>
+          <p className="hero-sub">{t.serving_sub}</p>
+          <p className="hero-desc">{t.hero_desc}</p>
           <div className="hero-btns">
             <button className="btn btn-primary" onClick={() => navigate('/yatra')}>
-              Learn About Yatra
+              {t.learn_yatra}
             </button>
             <button className="btn btn-secondary" onClick={() => navigate('/donation')}>
-              Donate Now
+              {t.donate_now}
             </button>
           </div>
         </div>
@@ -62,16 +63,13 @@ export default function HomePage() {
       {/* Highlight Strip */}
       <div className="highlight-strip">
         <p>
-          "सेवा ही धर्म है" —{' '}
-          <span>
-            Providing Support & Free Langar Services to Shri Amarnath Ji Yatris Selflessly.
-          </span>
+          {t.highlight_strip}
         </p>
       </div>
 
       {/* Services */}
       <section className="section">
-        <h2 className="section-title">Our Services</h2>
+        <h2 className="section-title">{t.our_services}</h2>
         <div className="cards-grid">
           {SERVICES.map((s) => (
             <div className="card" key={s.title}>
@@ -85,22 +83,19 @@ export default function HomePage() {
 
       {/* CTA */}
       <section className="cta-section">
-        <h2>Join Us in Serving the Pilgrims</h2>
-        <p>
-          Your support helps us provide better services to thousands of pilgrims
-          every year. Every contribution makes a difference.
-        </p>
+        <h2>{t.join_us}</h2>
+        <p>{t.join_us_desc}</p>
         <div className="cta-btns">
           <button className="btn btn-primary" onClick={() => navigate('/donation')}>
-            Make a Donation
+            {t.make_donation}
           </button>
           <button className="btn btn-white" onClick={() => navigate('/contact')}>
-            Get in Touch
+            {t.get_in_touch}
           </button>
         </div>
       </section>
 
-      <SocialSection heading="Follow Us On Social Media" />
+      <SocialSection heading={t.social_heading} />
     </>
   );
 }
