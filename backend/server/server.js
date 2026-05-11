@@ -47,9 +47,11 @@ const donationLimiter = rateLimit({
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5001',
+  'http://localhost:5000',
   'http://localhost:3000',
   'http://127.0.0.1:5173',
   'http://127.0.0.1:5001',
+  'http://127.0.0.1:5000',
   /\.app$/,
   /\.vercel\.app$/,
   /\.onrender\.com$/,
@@ -88,6 +90,8 @@ app.use('/api/yatra', require('./routes/yatra'));
 app.use('/api/ticker', require('./routes/ticker'));
 app.use('/api/announcements', require('./routes/announcements'));
 app.use('/api/settings', require('./routes/settings'));
+// AI chatbot proxy (Google Gemini)
+app.use('/api/gemini', require('./routes/gemini'));
 
 // Health check
 app.get('/api/health', (req, res) => {

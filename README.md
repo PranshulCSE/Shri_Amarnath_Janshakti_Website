@@ -1,3 +1,67 @@
+# Nandi AI Chatbot Deployment
+
+Nandi is the floating AI chatbot in the bottom-right corner of the site. It uses Google Gemini on the backend and only answers questions related to Shri Amarnath Ji Yatra, langar, and Shri Amarnath Janshakti Sewa Mandal.
+
+## Local setup
+
+1. Install backend dependencies:
+
+```bash
+cd backend
+npm install
+```
+
+2. Add these backend environment variables in `backend/.env`:
+
+```env
+GEMINI_API_KEY=your_google_gemini_api_key
+GOOGLE_API_KEY=your_google_gemini_api_key
+```
+
+3. Start the backend:
+
+```bash
+cd backend
+npm run dev
+```
+
+4. Install and run the frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Production deployment
+
+### Backend
+
+- Set `MONGO_URI`, `JWT_SECRET`, and `GEMINI_API_KEY` in your hosting provider.
+- Make sure your backend host is allowed in CORS.
+- If you deploy on Render, Vercel, or a similar platform, confirm `https://your-frontend-domain` is included in the CORS allowlist.
+
+### Frontend
+
+- Set `VITE_API_BASE_URL` to your backend API URL before building.
+- Example:
+
+```env
+VITE_API_BASE_URL=https://your-backend-domain.com/api
+```
+
+- Build the frontend:
+
+```bash
+cd frontend
+npm run build
+```
+
+## Notes
+
+- The chatbot only appears after `RootLayout` renders `NandiButton`.
+- The Nandi icon is served from `frontend/public/Images/nandi.svg`.
+- The React Router future flag warnings are informational and do not block Nandi.
 # SAJSSM - Shri Amarnath Ji Selfless Service Mission
 
 <div align="center">

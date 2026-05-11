@@ -6,6 +6,7 @@ import AnnouncementPopup from '../components/common/AnnouncementPopup';
 import Ticker from '../components/common/Ticker';
 import ScrollToTop from '../components/common/ScrollToTop';
 import LanguageSwitcher from '../components/common/LanguageSwitcher';
+import NandiButton from '../components/common/NandiButton';
 
 export default function RootLayout() {
   return (
@@ -20,6 +21,7 @@ export default function RootLayout() {
         <Outlet />
       </main>
       <Footer />
+      <NandiButton />
     </>
   );
 }
