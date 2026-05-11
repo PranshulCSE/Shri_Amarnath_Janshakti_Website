@@ -1,18 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cinzel:wght@600;700&display=swap');
 
 /* ── CSS Variables ─────────────────────── */
 :root {
-  --primary: #ff6b35;
-  --secondary: #f7931e;
-  --accent: #004e89;
+  --primary: #d4681d;
+  --secondary: #f2a93b;
+  --accent: #0e3e66;
   --success: #06a77d;
   --danger: #d62828;
-  --light: #f8f9fa;
-  --dark: #0f172a;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
-  --radius: 16px;
+  --light: #f2f5f8;
+  --dark: #122435;
+  --shadow: 0 12px 34px rgba(6, 35, 58, 0.12);
+  --shadow-hover: 0 20px 45px rgba(6, 35, 58, 0.2);
+  --radius: 18px;
   --transition: all 0.3s ease;
+  --font-body: 'Manrope', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: 'Cinzel', Georgia, 'Times New Roman', serif;
 }
 
 /* ── Reset ─────────────────────────────── */
@@ -29,8 +31,11 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--light);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(14, 62, 102, 0.08), rgba(14, 62, 102, 0) 35%),
+    radial-gradient(circle at 100% 100%, rgba(212, 104, 29, 0.08), rgba(212, 104, 29, 0) 35%),
+    var(--light);
   color: var(--dark);
   line-height: 1.6;
   overflow-x: hidden;
@@ -122,6 +127,8 @@ body {
   font-size: 2.1rem;
   color: var(--accent);
   font-weight: 700;
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
   text-align: center;
   margin-bottom: 8px;
 }
@@ -163,21 +170,23 @@ body {
 /* ── Shared Hero ───────────────────────── */
 .hero {
   max-width: 1400px;
-  margin: 50px auto;
+  margin: 38px auto;
   padding: 44px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 44px;
   align-items: center;
-  background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(247,147,30,0.08));
-  border-radius: 16px;
-  box-shadow: inset 0 0 0 1px rgba(255,107,53,0.15);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.88), rgba(249, 243, 235, 0.95));
+  border-radius: 22px;
+  box-shadow: inset 0 0 0 1px rgba(14, 62, 102, 0.09), 0 18px 36px rgba(7, 35, 56, 0.08);
   animation: fadeInUp 0.7s ease;
 }
 .hero-title {
   font-size: 2.5rem;
   color: var(--accent);
   font-weight: 700;
+  font-family: var(--font-heading);
+  letter-spacing: 0.01em;
   margin-bottom: 12px;
   line-height: 1.2;
 }
@@ -188,10 +197,10 @@ body {
   margin-bottom: 8px;
 }
 .hero-desc {
-  font-size: 0.97rem;
-  color: #555;
+  font-size: 1rem;
+  color: #33495a;
   margin-bottom: 24px;
-  line-height: 1.75;
+  line-height: 1.8;
 }
 .hero-btns {
   display: flex;
@@ -199,16 +208,17 @@ body {
   flex-wrap: wrap;
 }
 .hero-img-box {
+  position: relative;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 14px 34px rgba(7, 35, 56, 0.18);
 }
 .hero-img-box img {
   width: 100%;
-  padding: 5px;
+  padding: 6px;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s;
+  transition: transform 0.5s;
 }
 .hero-img-box:hover img {
   transform: scale(1.06);
@@ -232,12 +242,13 @@ body {
   margin-top: 40px;
 }
 .card {
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   padding: 30px 24px;
   border-radius: var(--radius);
   text-align: center;
   box-shadow: var(--shadow);
-  border-top: 4px solid var(--primary);
+  border-top: 3px solid var(--primary);
+  border: 1px solid rgba(11, 52, 83, 0.08);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .card:hover {
@@ -264,7 +275,7 @@ body {
 
 /* ── Shared CTA Section ────────────────── */
 .cta-section {
-  background: linear-gradient(135deg, var(--accent), #0056a8);
+  background: linear-gradient(130deg, #0b3558, #125082 52%, #9f4816 100%);
   color: white;
   padding: 64px 44px;
   text-align: center;
@@ -314,12 +325,14 @@ body {
 .social-section {
   text-align: center;
   padding: 48px 20px;
-  background: white;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(4px);
 }
 .social-section h3 {
   font-size: 1.45rem;
   color: var(--accent);
   font-weight: 700;
+  font-family: var(--font-heading);
   margin-bottom: 26px;
 }
 .social-links {
@@ -410,7 +423,8 @@ body {
     padding: 24px;
     gap: 24px;
   }
-  .hero-title { font-size: 1.7rem; }
+  .hero-title { font-size: 1.85rem; }
+  .section-title { font-size: 1.7rem; }
   .section { padding: 0 18px; }
   .form-row { grid-template-columns: 1fr; }
   .cta-section { padding: 44px 22px; margin: 40px 16px; }

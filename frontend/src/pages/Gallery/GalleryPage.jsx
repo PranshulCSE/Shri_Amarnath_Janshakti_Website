@@ -7,6 +7,7 @@ import './GalleryPage.css';
 export default function GalleryPage() {
   const { language } = useLanguage();
   const t = T[language];
+  const [activeItem, setActiveItem] = useState(null);
 
   const FALLBACK_ITEMS = [
     { _id: 'f1', src: '/Images/Governer.jpeg', alt: 'प्रशंसा पत्र', title: t.gal_1_title, description: t.gal_1_desc, fallback: '🎖️' },
@@ -52,6 +53,17 @@ export default function GalleryPage() {
     load();
   }, []);
 
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setActiveItem(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, []);
+
   return (
     <>
       {/* Hero */}
@@ -79,8 +91,20 @@ export default function GalleryPage() {
       <section className="section">
         <h2 className="section-title">{t.moments}</h2>
         <div className="modern-gallery-grid">
-          {items.map((item) => (
-            <div className="modern-gallery-card" key={item._id}>
+          {items.map((item, index) => (
+            <div
+              className={`modern-gallery-card ${index % 5 === 0 ? 'wide' : ''} ${index % 7 === 0 ? 'tall' : ''}`}
+              key={item._id}
+              role="button"
+              tabIndex={0}
+              onClick={() => setActiveItem(item)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  setActiveItem(item);
+                }
+              }}
+            >
               <img
                 src={item.src}
                 alt={item.alt || item.title}
@@ -94,6 +118,7 @@ export default function GalleryPage() {
               />
               <div className="gallery-overlay">
                 <div className="gallery-content">
+                  <span className="gallery-tag">Seva Moments</span>
                   <h3 className="gallery-card-title">{item.title}</h3>
                   {item.description && (
                     <p className="gallery-card-desc">{item.description}</p>
@@ -122,6 +147,30 @@ export default function GalleryPage() {
       </section>
 
       <SocialSection heading={t.social_heading} />
+
+      {activeItem && (
+        <div className="gallery-lightbox" role="dialog" aria-modal="true">
+          <button
+            className="gallery-lightbox-backdrop"
+            aria-label="Close image preview"
+            onClick={() => setActiveItem(null)}
+          />
+          <div className="gallery-lightbox-panel">
+            <button
+              className="gallery-lightbox-close"
+              aria-label="Close"
+              onClick={() => setActiveItem(null)}
+            >
+              <i className="fas fa-times" />
+            </button>
+            <img src={activeItem.src} alt={activeItem.alt || activeItem.title} />
+            <div className="gallery-lightbox-meta">
+              <h3>{activeItem.title}</h3>
+              {activeItem.description && <p>{activeItem.description}</p>}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

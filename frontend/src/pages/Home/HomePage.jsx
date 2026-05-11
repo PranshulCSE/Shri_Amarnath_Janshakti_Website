@@ -8,7 +8,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const { language } = useLanguage();
   const t = T[language];
-  
+
   const SERVICES = [
     { icon: '🍲', title: t.service_langar, desc: t.service_langar_desc },
     { icon: '🏥', title: t.service_medical, desc: t.service_medical_desc },
@@ -17,20 +17,32 @@ export default function HomePage() {
   ];
 
   const STATS = [
-    { value: '2008',   label: t.stats_serving },
-    { value: '17+',    label: t.stats_years },
-    { value: 'Lakhs of',  label: t.stats_pilgrims },
-    { value: 'Langar ',   label: t.stats_free },
+    { value: '2008', label: t.stats_serving },
+    { value: '17+', label: t.stats_years },
+    { value: 'Lakhs of', label: t.stats_pilgrims },
+    { value: 'Langar ', label: t.stats_free },
   ];
 
   return (
     <>
       {/* Hero */}
-      <section className="hero">
-        <div>
+      <section className="hero home-hero">
+        <div className="hero-atmosphere hero-atmosphere-one" />
+        <div className="hero-atmosphere hero-atmosphere-two" />
+
+        <div className="home-hero-copy">
+          <p className="hero-eyebrow">{t.site_title}</p>
           <h2 className="hero-title">{t.welcome}</h2>
           <p className="hero-sub">{t.serving_sub}</p>
           <p className="hero-desc">{t.hero_desc}</p>
+          <div className="hero-impact-row">
+            {STATS.slice(0, 3).map((s) => (
+              <div className="impact-pill" key={`hero-${s.label}`}>
+                <strong>{s.value}</strong>
+                <span>{s.label}</span>
+              </div>
+            ))}
+          </div>
           <div className="hero-btns">
             <button className="btn btn-primary" onClick={() => navigate('/yatra')}>
               {t.learn_yatra}
@@ -41,6 +53,10 @@ export default function HomePage() {
           </div>
         </div>
         <div className="hero-img-box">
+          <div className="hero-image-badge">
+            <span>{t.stats_serving}</span>
+            <strong>{STATS[0].value}</strong>
+          </div>
           <img
             src="/Images/Banner2026.png"
             alt="SAJSSM Yatra"
