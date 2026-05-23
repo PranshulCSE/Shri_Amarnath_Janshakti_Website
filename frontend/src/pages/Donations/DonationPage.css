@@ -12,7 +12,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: rgba(255,255,255,0.9);
+  color:rgba(0,0,0,0.15);
   font-size: 0.95rem;
 }
 
@@ -215,7 +215,7 @@
 
 .bank-details span {
   font-weight: 400;
-  color: rgba(255,255,255,0.6);
+  color: rgba(28, 26, 26, 0.6);
 }
 
 .digital-grid {
@@ -253,7 +253,7 @@
 .digital-card p {
   margin: 0;
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.6);
+  color: rgba(24, 16, 16, 0.6);
   line-height: 1.4;
 }
 
