@@ -3,6 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
 
+let GoogleGenAI = null;
+try {
+    ({ GoogleGenAI } = require('@google/genai'));
+} catch {
+    GoogleGenAI = null;
+}
+
 const envPath = path.join(__dirname, '..', '..', '.env');
 dotenv.config({ path: envPath });
 const fileEnv = fs.existsSync(envPath) ? dotenv.parse(fs.readFileSync(envPath, 'utf8')) : {};
@@ -12,6 +19,12 @@ const geminiApiKey =
     process.env.GOOGLE_API_KEY ||
     fileEnv.GEMINI_API_KEY ||
     fileEnv.GOOGLE_API_KEY;
+
+const geminiClient = GoogleGenAI && geminiApiKey
+    ? new GoogleGenAI({ apiKey: geminiApiKey })
+    : null;
+
+let quotaCooldownUntil = 0;
 
 const router = express.Router();
 
@@ -236,26 +249,88 @@ function getLocalAnswer(message, language) {
     return null;
 }
 
-// ─── Gemini model list with correct API versions ─────────────────────────────
-// ⚠️  gemini-2.0-* and gemini-1.5-* need v1beta; gemini-1.0-pro uses v1
-const GEMINI_MODELS = [
+function extractReplyText(data) {
+    if (!data) return null;
+
+    if (typeof data.text === 'string' && data.text.trim()) {
+        return data.text.trim();
+    }
+
+    if (typeof data.text === 'function') {
+        const text = data.text();
+        if (typeof text === 'string' && text.trim()) {
+            return text.trim();
+        }
+    }
+
+    const fallbackText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (typeof fallbackText === 'string' && fallbackText.trim()) {
+        return fallbackText.trim();
+    }
+
+    return null;
+}
+
+function parseGeminiError(errOrText, fallbackCode) {
+    const parsed = {
+        statusCode: Number(fallbackCode) || null,
+        status: null,
+        retryDelaySec: null,
+        message: typeof errOrText === 'string' ? errOrText : (errOrText?.message || ''),
+    };
+
+    const text = parsed.message;
+    if (typeof text !== 'string' || !text.trim()) {
+        return parsed;
+    }
+
+    try {
+        const obj = JSON.parse(text);
+        const top = obj?.error || obj;
+        if (top?.code) parsed.statusCode = Number(top.code) || parsed.statusCode;
+        if (top?.status) parsed.status = String(top.status);
+        if (top?.message) parsed.message = String(top.message);
+
+        const retry = top?.details?.find((d) => d['@type'] === 'type.googleapis.com/google.rpc.RetryInfo');
+        const retryDelay = retry?.retryDelay;
+        if (typeof retryDelay === 'string' && retryDelay.endsWith('s')) {
+            const sec = Number(retryDelay.replace('s', ''));
+            if (!Number.isNaN(sec)) parsed.retryDelaySec = sec;
+        }
+    } catch {
+        // Keep raw text when error payload is not JSON.
+    }
+
+    return parsed;
+}
+
+const DEFAULT_GEMINI_MODELS = [
     { name: 'gemini-2.0-flash', version: 'v1beta' },
-    { name: 'gemini-1.5-flash', version: 'v1beta' },
-    { name: 'gemini-1.5-pro', version: 'v1beta' },
-    { name: 'gemini-1.0-pro', version: 'v1' },
+    { name: 'gemini-2.0-flash-lite', version: 'v1beta' },
+    { name: 'gemini-2.5-flash', version: 'v1beta' },
 ];
+
+const configuredModelNames = (process.env.GEMINI_MODELS || fileEnv.GEMINI_MODELS || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+const GEMINI_MODELS = configuredModelNames.length
+    ? configuredModelNames.map((name) => ({ name, version: 'v1beta' }))
+    : DEFAULT_GEMINI_MODELS;
 
 // ─── Main route ──────────────────────────────────────────────────────────────
 router.post('/', async (req, res, next) => {
     try {
         const { message, language = 'hi' } = req.body || {};
+        const normalizedLanguage = language === 'en' ? 'en' : 'hi';
 
         if (!message || typeof message !== 'string') {
             return res.status(400).json({ success: false, message: 'Missing message' });
         }
 
         // ── Topic gate (English only; Hindi is more permissive) ──────────────────
-        if (language === 'en' && !isRelatedToTopic(message)) {
+        if (normalizedLanguage === 'en' && !isRelatedToTopic(message)) {
             return res.json({
                 success: true,
                 reply: 'Please ask questions related to Amarnath Ji Yatra or our langar seva. I am Nandi, your spiritual guide for the Yatra! 🙏',
@@ -263,7 +338,7 @@ router.post('/', async (req, res, next) => {
         }
 
         // ── 1. Try local FAQ first (instant, no API needed) ─────────────────────
-        const localAnswer = getLocalAnswer(message, language);
+        const localAnswer = getLocalAnswer(message, normalizedLanguage);
         if (localAnswer) {
             return res.json({ success: true, reply: localAnswer, source: 'faq' });
         }
@@ -272,10 +347,24 @@ router.post('/', async (req, res, next) => {
         if (!geminiApiKey) {
             return res.json({
                 success: true,
-                reply: language === 'en'
+                reply: normalizedLanguage === 'en'
                     ? 'I am Nandi 🙏 AI services are temporarily unavailable. For help, please call 9466132732 or email shriamarnathjanshakti@gmail.com.'
                     : 'मैं नंदी हूं 🙏 AI सेवाएं अभी उपलब्ध नहीं हैं। सहायता के लिए कृपया 9466132732 पर कॉल करें या shriamarnathjanshakti@gmail.com पर ईमेल करें।',
                 degraded: true,
+            });
+        }
+
+        // ── 2b. Quota cooldown: skip provider calls briefly after 429 ───────────
+        if (Date.now() < quotaCooldownUntil) {
+            const waitMs = quotaCooldownUntil - Date.now();
+            const waitSec = Math.max(1, Math.ceil(waitMs / 1000));
+            return res.json({
+                success: true,
+                reply: normalizedLanguage === 'en'
+                    ? `I am Nandi 🙏 AI quota is temporarily exhausted. Please retry in about ${waitSec} seconds.`
+                    : `मैं नंदी हूं 🙏 अभी AI कोटा अस्थायी रूप से समाप्त है। कृपया लगभग ${waitSec} सेकंड बाद दोबारा प्रयास करें।`,
+                degraded: true,
+                reason: 'quota_cooldown',
             });
         }
 
@@ -287,7 +376,7 @@ Your role is to help pilgrims with questions about:
 - Yatra preparation, health, packing, safety
 - Donations and volunteering for SAJSSM
 
-Respond ONLY in ${language === 'en' ? 'English' : 'Hindi'}. Keep answers concise (under 150 words). Be warm, respectful, and spiritually uplifting. If the question is completely unrelated to Yatra or SAJSSM, politely decline and redirect.
+Respond ONLY in ${normalizedLanguage === 'en' ? 'English' : 'Hindi'}. Keep answers concise (under 150 words). Be warm, respectful, and spiritually uplifting. If the question is completely unrelated to Yatra or SAJSSM, politely decline and redirect.
 
 Key facts:
 - SAJSSM serves free langar at Baltal route since 2011
@@ -296,57 +385,123 @@ Key facts:
 - Registration at: jksasb.nic.in
 - Yatra 2026 expected from 3rd July 2026`;
 
-        const payload = {
-            contents: [
-                {
-                    role: 'user',
-                    parts: [
-                        { text: systemPrompt },
-                        { text: `\nUser question: ${message}` },
-                    ],
-                },
-            ],
-            generationConfig: {
-                temperature: 0.3,
-                maxOutputTokens: 500,
-            },
-        };
+        let quotaExceeded = false;
+        let retryAfterSec = null;
 
         // Try each model in order until one works
         for (const { name, version } of GEMINI_MODELS) {
             try {
-                const url = `https://generativelanguage.googleapis.com/${version}/models/${name}:generateContent?key=${geminiApiKey}`;
+                let reply = null;
 
-                const fetchRes = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                });
+                if (geminiClient) {
+                    const response = await geminiClient.models.generateContent({
+                        model: name,
+                        contents: [
+                            {
+                                role: 'user',
+                                parts: [{ text: message }],
+                            },
+                        ],
+                        config: {
+                            systemInstruction: systemPrompt,
+                            temperature: 0.3,
+                            maxOutputTokens: 500,
+                        },
+                    });
+                    reply = extractReplyText(response);
+                } else if (typeof fetch === 'function') {
+                    const url = `https://generativelanguage.googleapis.com/${version}/models/${name}:generateContent?key=${geminiApiKey}`;
+                    const payload = {
+                        systemInstruction: {
+                            parts: [{ text: systemPrompt }],
+                        },
+                        contents: [
+                            {
+                                role: 'user',
+                                parts: [{ text: message }],
+                            },
+                        ],
+                        generationConfig: {
+                            temperature: 0.3,
+                            maxOutputTokens: 500,
+                        },
+                    };
 
-                if (!fetchRes.ok) {
-                    const errText = await fetchRes.text();
-                    console.warn(`[Nandi] ${name} failed (${fetchRes.status}):`, errText);
-                    continue; // try next model
+                    const fetchRes = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload),
+                    });
+
+                    if (!fetchRes.ok) {
+                        const errText = await fetchRes.text();
+                        const parsedError = parseGeminiError(errText, fetchRes.status);
+                        if (parsedError.statusCode === 429 || parsedError.status === 'RESOURCE_EXHAUSTED') {
+                            quotaExceeded = true;
+                            retryAfterSec = parsedError.retryDelaySec;
+                            console.warn(`[Nandi] ${name} quota exhausted (${parsedError.statusCode || '429'}).`);
+                            break;
+                        }
+                        if (parsedError.statusCode === 404 || parsedError.status === 'NOT_FOUND') {
+                            console.warn(`[Nandi] ${name} not available for this API key.`);
+                            continue;
+                        }
+                        console.warn(`[Nandi] ${name} failed (${parsedError.statusCode || fetchRes.status}):`, parsedError.message);
+                        continue;
+                    }
+
+                    const data = await fetchRes.json();
+                    reply = extractReplyText(data);
+                } else {
+                    console.warn('[Nandi] Neither @google/genai nor global fetch is available.');
+                    break;
                 }
-
-                const data = await fetchRes.json();
-                const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
                 if (reply) {
                     console.log(`[Nandi] answered using ${name}`);
                     return res.json({ success: true, reply: reply.trim(), model: name });
                 }
 
-                console.warn(`[Nandi] ${name} returned no text:`, JSON.stringify(data));
+                console.warn(`[Nandi] ${name} returned no usable text.`);
             } catch (modelErr) {
-                console.warn(`[Nandi] ${name} threw error:`, modelErr.message);
+                const parsedError = parseGeminiError(modelErr);
+                if (parsedError.statusCode === 429 || parsedError.status === 'RESOURCE_EXHAUSTED') {
+                    quotaExceeded = true;
+                    retryAfterSec = parsedError.retryDelaySec;
+                    quotaCooldownUntil = Date.now() + Math.max(5, Math.ceil(retryAfterSec || 15)) * 1000;
+                    quotaCooldownUntil = Date.now() + Math.max(5, Math.ceil(retryAfterSec || 15)) * 1000;
+                    console.warn(`[Nandi] ${name} quota exhausted (${parsedError.statusCode || '429'}).`);
+                    break;
+                }
+                if (parsedError.statusCode === 404 || parsedError.status === 'NOT_FOUND') {
+                    console.warn(`[Nandi] ${name} not available for this API key.`);
+                    continue;
+                }
+                console.warn(`[Nandi] ${name} threw error:`, parsedError.message);
             }
         }
 
         // ── All models failed → graceful fallback ─────────────────────────────────
+        if (quotaExceeded) {
+            const retryTextEn = retryAfterSec
+                ? ` Please retry in about ${Math.ceil(retryAfterSec)} seconds.`
+                : ' Please retry after a short while.';
+            const retryTextHi = retryAfterSec
+                ? ` कृपया लगभग ${Math.ceil(retryAfterSec)} सेकंड बाद दोबारा प्रयास करें।`
+                : ' कृपया थोड़ी देर बाद दोबारा प्रयास करें।';
+            return res.json({
+                success: true,
+                reply: normalizedLanguage === 'en'
+                    ? `I am Nandi 🙏 AI quota is currently exhausted.${retryTextEn}`
+                    : `मैं नंदी हूं 🙏 अभी AI कोटा समाप्त हो गया है।${retryTextHi}`,
+                degraded: true,
+                reason: 'quota_exhausted',
+            });
+        }
+
         return res.json({
             success: true,
-            reply: language === 'en'
+            reply: normalizedLanguage === 'en'
                 ? 'I am Nandi 🙏 I could not connect to AI right now. Please call us at 9466132732 or email shriamarnathjanshakti@gmail.com for assistance. Jai Baba Barfani!'
                 : 'मैं नंदी हूं 🙏 अभी AI से कनेक्ट नहीं हो पाया। कृपया 9466132732 पर कॉल करें या shriamarnathjanshakti@gmail.com पर ईमेल करें। जय बाबा बर्फानी!',
             degraded: true,
