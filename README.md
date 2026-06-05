@@ -1,6 +1,6 @@
 # Nandi AI Chatbot Deployment
 
-Nandi is the floating AI chatbot in the bottom-right corner of the site. It uses Google Gemini on the backend and only answers questions related to Shri Amarnath Ji Yatra, langar, and Shri Amarnath Janshakti Sewa Mandal.
+Nandi is the floating AI chatbot in the bottom-right corner of the site. It uses Google Gemini on the backend and answers questions related to Shri Amarnath Ji Yatra, langar, and Shri Amarnath Janshakti Sewa Mandal.
 
 ## Local setup
 
