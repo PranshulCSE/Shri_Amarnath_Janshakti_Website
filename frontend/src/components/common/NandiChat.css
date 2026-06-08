@@ -1,15 +1,245 @@
-.nandi-chat-window{
-  position:fixed; right:20px; bottom:100px; width:320px; max-width:90vw; height:420px; background:#fff; box-shadow:0 10px 30px rgba(0,0,0,0.25); border-radius:12px; z-index:10000; display:flex; flex-direction:column; overflow:hidden;
+/* ═══════════════════════════════════════════════════════════
+   NandiChat.css  —  Chat Window Styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Chat Window ─────────────────────────────────────────── */
+.nandi-chat-window {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  width: 340px;
+  max-width: 92vw;
+  height: 460px;
+  background: #fff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22);
+  border-radius: 16px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Segoe UI', 'Noto Sans Devanagari', sans-serif;
+  animation: nandiSlideUp 0.22s ease;
 }
-.nandi-chat-header{ display:flex; align-items:center; justify-content:space-between; padding:10px 12px; background:#f6f2ea; border-bottom:1px solid #eee; }
-.nandi-title{ font-weight:700; color:#6a3f12 }
-.nandi-close{ background:transparent; border:0; font-size:20px; cursor:pointer }
-.nandi-chat-list{ padding:12px; overflow:auto; flex:1; background:linear-gradient(#fff,#fff); }
-.nandi-msg{ margin-bottom:10px; display:flex }
-.nandi-msg.user{ justify-content:flex-end }
-.nandi-msg.bot{ justify-content:flex-start }
-.nandi-text{ max-width:78%; padding:8px 10px; border-radius:10px; background:#f0eadf; color:#2b2b2b }
-.nandi-msg.user .nandi-text{ background:#e6f7ff }
-.nandi-chat-input{ display:flex; gap:8px; padding:10px; border-top:1px solid #eee; align-items:center }
-.nandi-chat-input textarea{ flex:1; resize:none; height:54px; padding:8px; border-radius:8px; border:1px solid #ddd }
-.nandi-chat-input button{ background:#a8682f; color:#fff; border:0; padding:8px 12px; border-radius:8px; cursor:pointer }
+
+@keyframes nandiSlideUp {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* ─── Header ──────────────────────────────────────────────── */
+.nandi-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f6f2ea;
+  border-bottom: 1px solid #e8e0d0;
+  flex-shrink: 0;
+}
+
+.nandi-header-info {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.nandi-avatar-small {
+  font-size: 20px;
+  background: #fff3e8;
+  border: 1.5px solid #c87941;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nandi-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #6a3f12;
+}
+
+.nandi-subtitle {
+  font-size: 11px;
+  color: #a07040;
+  margin-top: 1px;
+}
+
+.nandi-close {
+  background: transparent;
+  border: 0;
+  font-size: 22px;
+  cursor: pointer;
+  color: #8a6030;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.nandi-close:hover { background: rgba(168, 104, 47, 0.1); }
+
+/* ─── Message List ────────────────────────────────────────── */
+.nandi-chat-list {
+  padding: 12px;
+  overflow-y: auto;
+  flex: 1;
+  background: #faf7f2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+
+.nandi-chat-list::-webkit-scrollbar { width: 3px; }
+.nandi-chat-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
+
+/* ─── Message Rows ────────────────────────────────────────── */
+.nandi-msg {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+}
+.nandi-msg.user { justify-content: flex-end; }
+.nandi-msg.bot  { justify-content: flex-start; }
+
+.nandi-bot-avatar {
+  font-size: 16px;
+  background: #fff3e8;
+  border: 1.5px solid #c87941;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+
+/* ─── Bubbles ─────────────────────────────────────────────── */
+.nandi-text {
+  max-width: 78%;
+  padding: 8px 11px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.nandi-msg.bot  .nandi-text { background: #f0eadf; color: #2b2b2b; border-bottom-left-radius: 4px; }
+.nandi-msg.user .nandi-text { background: #e6f7ff; color: #1a3a4a; border-bottom-right-radius: 4px; }
+.nandi-msg.bot.error .nandi-text { background: #fff3f3; color: #c0392b; border: 1px solid #f5c6cb; }
+
+/* ─── Typing Dots ─────────────────────────────────────────── */
+.nandi-typing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 14px;
+  background: #f0eadf;
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+}
+.nandi-typing span {
+  width: 6px; height: 6px;
+  background: #a8682f;
+  border-radius: 50%;
+  display: inline-block;
+  animation: nandiDot 1.2s infinite ease-in-out;
+}
+.nandi-typing span:nth-child(2) { animation-delay: 0.2s; }
+.nandi-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes nandiDot {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.45; }
+  40%           { transform: scale(1.1); opacity: 1;    }
+}
+
+/* ─── Quick Chips ─────────────────────────────────────────── */
+.nandi-quick-questions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 2px 0 4px;
+}
+.nandi-chip {
+  background: #fff;
+  border: 1.5px solid #c87941;
+  color: #8a4f1e;
+  font-size: 11.5px;
+  padding: 5px 11px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.nandi-chip:hover { background: #a8682f; color: #fff; border-color: #a8682f; }
+
+/* ─── Input Bar ───────────────────────────────────────────── */
+.nandi-chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid #eee;
+  align-items: flex-end;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.nandi-chat-input textarea {
+  flex: 1;
+  resize: none;
+  height: 54px;
+  max-height: 80px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1.5px solid #ddd;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+  outline: none;
+  background: #faf8f5;
+  color: #2c2c2c;
+  transition: border-color 0.18s;
+  overflow-y: auto;
+}
+.nandi-chat-input textarea:focus { border-color: #a8682f; background: #fff; }
+.nandi-chat-input textarea:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.nandi-chat-input button,
+.nandi-send-btn {
+  background: #a8682f;
+  color: #fff;
+  border: 0;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s, opacity 0.15s;
+}
+.nandi-chat-input button:hover:not(:disabled),
+.nandi-send-btn:hover:not(:disabled) { transform: scale(1.08); }
+.nandi-chat-input button:disabled,
+.nandi-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ─── Mobile ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .nandi-chat-window {
+    width: calc(100vw - 16px);
+    right: 8px;
+    bottom: 88px;
+    height: 68vh;
+    border-radius: 14px;
+  }
+}

@@ -1,24 +1,71 @@
-.nandi-fab{
+/* ═══════════════════════════════════════════════════════════
+   NandiButton.css  —  Floating Action Button Styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── FAB ─────────────────────────────────────────────────── */
+.nandi-fab {
   position: fixed;
   right: 20px;
   bottom: 20px;
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
   cursor: pointer;
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
 }
-.nandi-fab img{ width:44px; height:44px; }
-.nandi-pulse{
-  position:absolute;
-  width:84px; height:84px; border-radius:50%;
-  right:-10px; bottom:-10px;
-  background: rgba(162,110,40,0.12);
-  animation: pulse 1.8s infinite;
+.nandi-fab:hover {
+  transform: scale(1.07);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.28);
 }
-@keyframes pulse{ 0%{transform:scale(0.9);opacity:1} 100%{transform:scale(1.6);opacity:0} }
+.nandi-fab.open {
+  transform: scale(0.93);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.nandi-fab img {
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+}
+
+/* ─── Pulse Ring ──────────────────────────────────────────── */
+.nandi-pulse {
+  position: absolute;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  right: -10px;
+  bottom: -10px;
+  background: rgba(162, 110, 40, 0.14);
+  animation: nandiPulse 1.8s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes nandiPulse {
+  0%   { transform: scale(0.88); opacity: 1; }
+  100% { transform: scale(1.65); opacity: 0; }
+}
+
+/* ─── Tooltip (optional — shows on hover if you add the attr) */
+.nandi-fab[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  right: 72px;
+  bottom: 50%;
+  transform: translateY(50%);
+  background: rgba(50, 30, 10, 0.82);
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  font-family: 'Segoe UI', sans-serif;
+}
